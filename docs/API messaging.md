@@ -8,7 +8,7 @@ Concurrency control is left to specific device implementations, however devices 
 
 ## URL and query parameters usage
 
-The URL provided in the [IS-04 device](IS-04%20interactions) is used as the base URL for all subsequent requests.
+The URL provided in the [IS-04 device](IS-04%20interactions.md) is used as the base URL for all subsequent requests.
 
 The device model of the device can be navigated by appending [NcObject roles](https://specs.amwa.tv/ms-05-02/latest/docs/NcObject.html) on top of the base URL starting from the `root block`.
 
