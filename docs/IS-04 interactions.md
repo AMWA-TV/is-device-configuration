@@ -36,3 +36,5 @@ In either case, the ‘control’ endpoint for each Device’s Configuration API
 This flexibility is to accommodate different relationships between Devices and Nodes. For example, some Devices may be loosely coupled to the Node, for example cards in a card frame.
 These Devices are more likely to have an instance of the API for each card.
 Others may be tightly coupled, for example a media processing pipeline on a server, where it is likely to be preferable to have one instance of the API that is advertised for each pipeline.
+
+`TODO`: decide on `href` format and trailing slashes
