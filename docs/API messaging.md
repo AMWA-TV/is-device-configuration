@@ -136,7 +136,7 @@ The body of the request MUST include an object which includes a [methodId](https
 }
 ```
 
-For a full schema of the required body object see the [patch-body](https://specs.amwa.tv/is-device-configuration/branches/publish-CR/APIs/schemas/with-refs/patch-body.html) schema.
+For a full schema of the required body object see the [patch-body](https://specs.amwa.tv/is-device-configuration/branches/publish-CR/APIs/schemas/patch-body.html) schema.
 
 The response MUST be of type [NcMethodResult](https://specs.amwa.tv/ms-05-02/latest/docs/Framework.html#ncmethodresult) or a derived type.
 
