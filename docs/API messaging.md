@@ -115,9 +115,9 @@ This is equivalent to invoking the generic [Set method](https://specs.amwa.tv/ms
 |:--:|
 | _**Invoking a method**_ |
 
-| URL format           | Condition                         | Body                                                                                       | Response type                                                                              |
-| ---------------------| ----------------------------------| -------------------------------------------------------------------------------------------| -------------------------------------------------------------------------------------------|
-| {baseUrl}/{rolePath} | The URL targets a specific object | [NcMethodResult](https://specs.amwa.tv/ms-05-02/latest/docs/Framework.html#ncmethodresult) | [NcMethodResult](https://specs.amwa.tv/ms-05-02/latest/docs/Framework.html#ncmethodresult) |
+| URL format           | Condition                         | Body                                                                                                                | Response type                                                                              |
+| ---------------------| ----------------------------------| --------------------------------------------------------------------------------------------------------------------| -------------------------------------------------------------------------------------------|
+| {baseUrl}/{rolePath} | The URL targets a specific object | [patch-body schema](https://specs.amwa.tv/is-device-configuration/branches/publish-CR/APIs/schemas/patch-body.html) | [NcMethodResult](https://specs.amwa.tv/ms-05-02/latest/docs/Framework.html#ncmethodresult) |
 
 The PATCH verb MUST only be used for invoking object methods.
 
