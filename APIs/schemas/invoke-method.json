@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-04/schema#",
   "type": "object",
   "description": "PATCH request body for invoking a method",
-  "title": "PATCH request body",
+  "title": "Invoke method body",
   "required": [
     "methodId"
   ],
