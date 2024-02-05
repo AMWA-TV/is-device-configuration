@@ -1,0 +1,15 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "NcMethodResult",
+    "description": "Base result of the invoked method",
+    "type": "object",
+    "required": [
+        "status"
+    ],
+    "properties": {
+        "status": {
+            "$ref": "NcMethodStatus.json",
+            "description": "Status for the invoked method"
+        }
+    }
+}

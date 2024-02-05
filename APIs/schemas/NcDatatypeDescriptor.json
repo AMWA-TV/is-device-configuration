@@ -1,0 +1,37 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "NcDatatypeDescriptor",
+    "description": "Base datatype descriptor",
+    "allOf": [
+        {
+            "$ref": "NcDescriptor.json"
+        }
+    ],
+    "type": "object",
+    "required": [
+        "name",
+        "type",
+        "constraints"
+    ],
+    "properties": {
+        "name": {
+            "$ref": "NcName.json",
+            "description": "Datatype name"
+        },
+        "type": {
+            "$ref": "NcDatatypeType.json",
+            "description": "Type: Primitive, Typedef, Struct, Enum"
+        },
+        "constraints": {
+            "anyOf": [
+                {
+                    "$ref": "NcParameterConstraints.json"
+                },
+                {
+                    "type": "null"
+                }
+            ],
+            "description": "Optional constraints on top of the underlying data type"
+        }
+    }
+}

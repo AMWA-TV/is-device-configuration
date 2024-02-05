@@ -1,0 +1,101 @@
+#%RAML 1.0
+title: NMOS Configuration API
+baseUri: http://api.example.com/x-nmos/configuration/{version}
+version: 1.0
+
+uses:
+  assets: assets.lib.raml
+
+annotationTypes:
+  monitoringInterval:
+    type: integer
+/:
+  displayName: Base
+  get:
+    description: List of paths available from this API
+    responses:
+      200:
+        body:
+          example: !include ../examples/base-get-200.json
+          type: !include schemas/base.json
+/rolePaths:
+  displayName: Role Paths
+  get:
+  responses:
+      200:
+        body:
+          example: !include ../examples/rolePaths-base-get-200.json
+          type: !include schemas/rolePaths-base.json
+  description: List rolePaths
+  /{rolePath}:
+    uriParameters:
+      rolePath:
+        type: string
+    get:
+      description: Get attributes of the object specified by rolePath
+      responses:
+        200:
+          body:
+          example: !include ../examples/rolePath-get-200.json
+          type: !include schemas/rolePath.json
+    /properties:
+      displayName: Properties
+      get:
+        description: Get properties of the object
+        responses:
+          200:
+            body:
+            example: !include ../examples/properties-base-get-200.json
+            type: !include schemas/properties-base.json
+      /{propertyId}:
+        uriParameters:
+          propertyId:
+            type: string
+        get:
+          description: Get attributes of a property
+          responses:
+            200:
+              body:
+              example: !include ../examples/property-get-200.json
+              type: !include schemas/property.json
+        /value:
+          displayName: Value of a property
+          get:
+            description: Get value of a property
+            responses:
+              200:
+                body:
+                example: !include ../examples/property-value-get-200.json
+                type: !include schemas/NcMethodResultPropertyValue.json
+          put:
+            descriptions: Set value of a property
+            responses:
+              200:
+                body:
+                example: !include ../examples/property-value-get-200.json
+                type: !include schemas/modify-property.json
+        /descriptor:
+          displayName: Descriptor of property
+          get:
+            description: Get descriptor of a property
+            responses:
+              200:
+                body:
+                example: !include ../examples/properties-descriptor-get-200.json
+                type: !include schemas/NcDatatypeDescriptor.json
+    /methods:
+      displayName: Methods
+      get:
+      description: List Methods
+      /{methodId}:
+        uriParameters:
+          propertyId:
+            type: string
+        patch:
+    /members:
+      displayName: Members
+      get:
+      description: List Methods
+    /descriptor:
+      displayName: Members
+      get:
