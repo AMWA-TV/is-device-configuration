@@ -34,9 +34,6 @@ documentation:
           example: !include ../examples/rolePaths-base-get-200.json
           type: !include schemas/rolePaths-base.json
   /{rolePath}:
-    uriParameters:
-      rolePath:
-        type: string
     get:
       description: Get attributes of the object specified by rolePath
       responses:
@@ -54,9 +51,6 @@ documentation:
             example: !include ../examples/properties-base-get-200.json
             type: !include schemas/properties-base.json
       /{propertyId}:
-        uriParameters:
-          propertyId:
-            type: string
         get:
           description: Get attributes of a property
           responses:
@@ -94,10 +88,8 @@ documentation:
       get:
       description: List Methods
       /{methodId}:
-        uriParameters:
-          propertyId:
-            type: string
         patch:
+        description: Invoke method
     /members:
       displayName: Members
       get:
