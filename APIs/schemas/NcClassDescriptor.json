@@ -1,57 +1,57 @@
 {
-  "description": "Descriptor of a class",
-  "name": "NcClassDescriptor",
-  "type": 2,
-  "fields": [
-    {
-      "description": "Identity of the class",
-      "name": "classId",
-      "typeName": "NcClassId",
-      "isNullable": false,
-      "isSequence": false,
-      "constraints": null
-    },
-    {
-      "description": "Name of the class",
-      "name": "name",
-      "typeName": "NcName",
-      "isNullable": false,
-      "isSequence": false,
-      "constraints": null
-    },
-    {
-      "description": "Role if the class has fixed role (manager classes)",
-      "name": "fixedRole",
-      "typeName": "NcString",
-      "isNullable": true,
-      "isSequence": false,
-      "constraints": null
-    },
-    {
-      "description": "Property descriptors",
-      "name": "properties",
-      "typeName": "NcPropertyDescriptor",
-      "isNullable": false,
-      "isSequence": true,
-      "constraints": null
-    },
-    {
-      "description": "Method descriptors",
-      "name": "methods",
-      "typeName": "NcMethodDescriptor",
-      "isNullable": false,
-      "isSequence": true,
-      "constraints": null
-    },
-    {
-      "description": "Event descriptors",
-      "name": "events",
-      "typeName": "NcEventDescriptor",
-      "isNullable": false,
-      "isSequence": true,
-      "constraints": null
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "NcClassDescriptor",
+    "description": "Descriptor of a class",
+    "allOf": [
+        {
+            "$ref": "NcDescriptor.json"
+        }
+    ],
+    "type": "object",
+    "required": [
+        "classId",
+        "name",
+        "fixedRole",
+        "properties",
+        "methods",
+        "events"
+    ],
+    "properties": {
+        "classId": {
+            "$ref": "NcClassId.json",
+            "description": "Identity of the class"
+        },
+        "name": {
+            "$ref": "NcName.json",
+            "description": "Name of the class"
+        },
+        "fixedRole": {
+            "type": [
+                "string",
+                "null"
+            ],
+            "description": "Role if the class has fixed role (manager classes)"
+        },
+        "properties": {
+            "type": "array",
+            "items": {
+                "$ref": "NcPropertyDescriptor.json"
+            },
+            "description": "Property descriptors"
+        },
+        "methods": {
+            "type": "array",
+            "items": {
+                "$ref": "NcMethodDescriptor.json"
+            },
+            "description": "Method descriptors"
+        },
+        "events": {
+            "type": "array",
+            "items": {
+                "$ref": "NcEventDescriptor.json"
+            },
+            "description": "Event descriptors"
+        }
     }
-  ],
-  "parentType": "NcDescriptor",
-  "constraints": null
 }
