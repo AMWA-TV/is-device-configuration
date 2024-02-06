@@ -97,11 +97,26 @@ documentation:
               type: !include schemas/methods-base.json
       /{methodId}:
         patch:
-        description: Invoke method
+          description: Invoke method
+          body:
+            type: !include schemas/invoke-method.json
+          responses:
+            200:
     /members:
       displayName: Members
       get:
-      description: List Methods
+        description: List member objects of this object.
+        responses:
+          200:
+            body:
+              example: !include ../examples/members-base-get-200.json
+              type: !include schemas/members-base.json
     /descriptor:
       displayName: Members
       get:
+        description: List member objects of this object.
+        responses:
+          200:
+            body:
+              example: !include ../examples/class-descriptor-get-200.json
+              type: !include schemas/NcClassDescriptor.json

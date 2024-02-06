@@ -1,0 +1,5 @@
+[
+  { "href": "http://api.example.com/x-nmos/configuration/v1.0/rolePaths/root.ClassManager" },
+  { "href": "http://api.example.com/x-nmos/configuration/v1.0/rolePaths/root.DeviceManager" },
+  { "href": "http://api.example.com/x-nmos/configuration/v1.0/rolePaths/root.StereoGain" }
+]
