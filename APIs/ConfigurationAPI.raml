@@ -69,11 +69,14 @@ documentation:
                   type: !include schemas/NcMethodResultPropertyValue.json
           put:
             descriptions: Set value of a property
+            body:
+              example: !include ../examples/property-value-get-200.json
+              type: !include schemas/modify-property.json
             responses:
               200:
-                body:
-                  example: !include ../examples/property-value-get-200.json
-                  type: !include schemas/modify-property.json
+              body:
+                example: !include ../examples/NcMethodResult-get-200.json
+                type: !include schemas/NcMethodResult.json
         /descriptor:
           displayName: Descriptor of property
           get:
@@ -81,7 +84,7 @@ documentation:
             responses:
               200:
                 body:
-                  example: !include ../examples/properties-descriptor-get-200.json
+                  example: !include ../examples/property-descriptor-get-200.json
                   type: !include schemas/NcDatatypeDescriptor.json
     /methods:
       displayName: Methods
