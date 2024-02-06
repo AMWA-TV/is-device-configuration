@@ -102,6 +102,8 @@ documentation:
             type: !include schemas/invoke-method.json
           responses:
             200:
+              body:
+                type: !include schemas/NcMethodResult.json
     /members:
       displayName: Members
       get:
