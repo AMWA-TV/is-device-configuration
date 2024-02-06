@@ -89,7 +89,12 @@ documentation:
     /methods:
       displayName: Methods
       get:
-      description: List Methods
+        description: Get methods of an object
+        responses:
+          200:
+            body:
+              example: !include ../examples/methods-base-get-200.json
+              type: !include schemas/methods-base.json
       /{methodId}:
         patch:
         description: Invoke method
