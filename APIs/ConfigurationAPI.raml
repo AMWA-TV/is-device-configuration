@@ -66,7 +66,7 @@ documentation:
               200:
                 body:
                   example: !include ../examples/property-value-get-200.json
-                  type: !include schemas/NcMethodResultPropertyValue.json
+                  type: !include schemas/generic-object.json
           put:
             descriptions: Set value of a property
             body:
@@ -75,8 +75,8 @@ documentation:
             responses:
               200:
                 body:
-                  example: !include ../examples/NcMethodResult-get-200.json
-                  type: !include schemas/NcMethodResult.json
+                  example: !include ../examples/property-value-put-200.json
+                  type: !include schemas/generic-object.json
         /descriptor:
           displayName: Descriptor of property
           get:
@@ -85,7 +85,7 @@ documentation:
               200:
                 body:
                   example: !include ../examples/property-descriptor-get-200.json
-                  type: !include schemas/NcDatatypeDescriptor.json
+                  type: !include schemas/generic-object.json
     /methods:
       displayName: Methods
       get:
@@ -103,7 +103,7 @@ documentation:
           responses:
             200:
               body:
-                type: !include schemas/NcMethodResult.json
+                type: !include schemas/generic-object.json
     /members:
       displayName: Members
       get:
@@ -121,4 +121,4 @@ documentation:
           200:
             body:
               example: !include ../examples/class-descriptor-get-200.json
-              type: !include schemas/NcClassDescriptor.json
+              type: !include schemas/generic-object.json
