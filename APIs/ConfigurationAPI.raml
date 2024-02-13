@@ -66,7 +66,7 @@ documentation:
               200:
                 body:
                   example: !include ../examples/property-value-get-200.json
-                  type: !include schemas/generic-object.json
+                  type: !include schemas/property-value-get.json
           put:
             descriptions: Set value of a property
             body:
@@ -76,7 +76,7 @@ documentation:
               200:
                 body:
                   example: !include ../examples/property-value-put-200.json
-                  type: !include schemas/generic-object.json
+                  type: !include schemas/property-value-get.json
         /descriptor:
           displayName: Descriptor of property
           get:
@@ -85,7 +85,7 @@ documentation:
               200:
                 body:
                   example: !include ../examples/property-descriptor-get-200.json
-                  type: !include schemas/generic-object.json
+                  type: !include schemas/property-descriptor-get.json
     /methods:
       displayName: Methods
       get:
@@ -103,7 +103,7 @@ documentation:
           responses:
             200:
               body:
-                type: !include schemas/generic-object.json
+                type: !include schemas/method-patch-response.json
     /members:
       displayName: Members
       get:
@@ -121,4 +121,4 @@ documentation:
           200:
             body:
               example: !include ../examples/class-descriptor-get-200.json
-              type: !include schemas/generic-object.json
+              type: !include schemas/descriptor-get.json
