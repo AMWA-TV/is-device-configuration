@@ -84,7 +84,7 @@ documentation:
           put:
             descriptions: 'Put value of a Property'
             body:
-              example: !include ../examples/property-value-put.json
+              example: !include ../examples/property-value-put-request.json
               type: !include schemas/property-value-put-request.json
             responses:
               200:
@@ -122,10 +122,12 @@ documentation:
         patch:
           description: 'Invoke method.'
           body:
+            example: !include ../examples/method-patch-request.json
             type: !include schemas/method-patch-request.json
           responses:
             200:
               body:
+                example: !include ../examples/method-patch-200.json
                 type: !include schemas/method-patch-response.json
             400:
               description: 'Returned when the method arguments are invalid. Corresponds to NcMethodStatus code 417.'
