@@ -41,6 +41,10 @@ documentation:
           body:
             example: !include ../examples/rolePath-get-200.json
             type: !include schemas/rolePath.json
+        404:
+          description: Returned when the requested Role Path does not exist
+          body:
+            type: !include schemas/error.json
     /properties:
       displayName: Properties
       get:
@@ -58,6 +62,11 @@ documentation:
               body:
                 example: !include ../examples/property-get-200.json
                 type: !include schemas/property.json
+            404:
+              description: Returned when the requested Property does not exist
+              body:
+                type: !include schemas/error.json
+
         /value:
           displayName: Value of a property
           get:
@@ -104,6 +113,10 @@ documentation:
             200:
               body:
                 type: !include schemas/method-patch-response.json
+            404:
+              description: Returned when the requested Method does not exist
+              body:
+                type: !include schemas/error.json
     /members:
       displayName: Members
       get:
