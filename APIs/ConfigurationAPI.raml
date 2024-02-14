@@ -16,72 +16,74 @@ documentation:
     content: |
       The API presents...
 /:
-  displayName: Base
+  displayName: 'Base'
   get:
-    description: List of paths available from this API
+    description: 'List of paths available from this API'
     responses:
       200:
         body:
           example: !include ../examples/base-get-200.json
           type: !include schemas/base.json
 /rolePaths:
-  displayName: Role Paths
+  displayName: 'Role Paths'
   get:
-    description: Returns the name of the root block of the Device Model
+    description: 'Returns the name of the Root Block of the Device Model'
     responses:
       200:
         body:
           example: !include ../examples/rolePaths-base-get-200.json
           type: !include schemas/rolePaths-base.json
   /{rolePath}:
+    displayName: 'Attributes of a Role Path'
     get:
-      description: Get attributes of the object specified by rolePath
+      description: 'Get attributes of the object specified by rolePath'
       responses:
         200:
           body:
             example: !include ../examples/rolePath-get-200.json
             type: !include schemas/rolePath.json
         404:
-          description: Returned when the requested Role Path does not exist. Corresponds to NcMethodStatus code 404.
+          description: 'Returned when the requested Role Path does not exist. Corresponds to NcMethodStatus code 404.'
           body:
             type: !include schemas/ms05-error.json
     /properties:
-      displayName: Properties
+      displayName: 'Properties'
       get:
-        description: Get properties of the object
+        description: 'Get Properties of the object'
         responses:
           200:
             body:
               example: !include ../examples/properties-base-get-200.json
               type: !include schemas/properties-base.json
       /{propertyId}:
+	    displayName: 'Attributes of a Property'
         get:
-          description: Get attributes of a property
+          description: 'Get attributes of a Property'
           responses:
             200:
               body:
                 example: !include ../examples/property-get-200.json
                 type: !include schemas/property.json
             404:
-              description: Returned when the requested Property does not exist. Corresponds to NcMethodStatus code 502.
+              description: 'Returned when the requested Property does not exist. Corresponds to NcMethodStatus code 502.'
               body:
                 type: !include schemas/ms05-error.json
 
         /value:
-          displayName: Value of a property
+          displayName: 'Value of a Property'
           get:
-            description: Get value of a property
+            description: 'Get value of a Property'
             responses:
               200:
                 body:
                   example: !include ../examples/property-value-get-200.json
                   type: !include schemas/property-value-get.json
               500:
-                description: Returned when the Property was unable to be retrieved. Corresponds to NcMethodStatus code 500.
+                description: 'Returned when the Property was unable to be retrieved. Corresponds to NcMethodStatus code 500.'
                 body:
                   type: !include schemas/ms05-error.json
           put:
-            descriptions: Set value of a property
+            descriptions: 'Put value of a Property'
             body:
               example: !include ../examples/property-value-put.json
               type: !include schemas/property-value-put-request.json
@@ -91,34 +93,35 @@ documentation:
                   example: !include ../examples/property-value-put-200.json
                   type: !include schemas/property-value-put-response.json
               500:
-                description: Returned when the Property was unable to be set. Corresponds to the following NcMethodStatus codes: 405 if Property is read only, 417 if the value is invalid, 500 for all other reasons.
+                description: 'Returned when the Property was unable to be set. Corresponds to the following NcMethodStatus codes: 405 if Property is read only, 417 if the value is invalid, 500 for all other reasons.'
                 body:
                   type: !include schemas/ms05-error.json
         /descriptor:
-          displayName: Datatype Descriptor of property
+          displayName: 'Datatype Descriptor of property'
           get:
-            description: MS-05 Datatype Descriptor of property
+            description: 'Get MS-05 Datatype Descriptor of property'
             responses:
               200:
                 body:
                   example: !include ../examples/property-descriptor-get-200.json
                   type: !include schemas/property-descriptor.json
               500:
-                description: Returned when the Datatype Descriptor of this object was unable to be retrieved. Corresponds to NcMethodStatus code 500.
+                description: 'Returned when the Datatype Descriptor of this object was unable to be retrieved. Corresponds to NcMethodStatus code 500.'
                 body:
                   type: !include schemas/ms05-error.json
     /methods:
-      displayName: Methods
+      displayName: 'Methods'
       get:
-        description: Get methods of this object
+        description: 'Get Methods of this object.'
         responses:
           200:
             body:
               example: !include ../examples/methods-base-get-200.json
               type: !include schemas/methods-base.json
       /{methodId}:
+		displayName: 'Invoke Method.'
         patch:
-          description: Invoke method
+          description: 'Invoke method.'
           body:
             type: !include schemas/method-patch-request.json
           responses:
@@ -126,40 +129,40 @@ documentation:
               body:
                 type: !include schemas/method-patch-response.json
             400:
-              description: Returned when the Arguments of the method invalid. Corresponds to NcMethodStatus code 417.
+              description: 'Returned when the Arguments of the method invalid. Corresponds to NcMethodStatus code 417.'
               body:
                 type: !include schemas/ms05-error.json
             404:
-              description: Returned when the requested Method does not exist. Corresponds to NcMethodStatus code 501.
+              description: 'Returned when the requested Method does not exist. Corresponds to NcMethodStatus code 501.'
               body:
                 type: !include schemas/ms05-error.json
             500:
-              description: Returned when the Method was unable to be invoked. Corresponds to NcMethodStatus code 500.
+              description: 'Returned when the Method was unable to be invoked. Corresponds to NcMethodStatus code 500.'
               body:
                 type: !include schemas/ms05-error.json
     /members:
-      displayName: Members
+      displayName: 'Members'
       get:
-        description: List member objects of this object.
+        description: 'List Member objects of this object.'
         responses:
           200:
             body:
               example: !include ../examples/members-base-get-200.json
               type: !include schemas/members-base.json
           500:
-            description: Returned when the Members of this object were unable to be retrieved. Corresponds to NcMethodStatus code 500.
+            description: 'Returned when the Members of this object were unable to be retrieved. Corresponds to NcMethodStatus code 500.'
             body:
               type: !include schemas/ms05-error.json
     /descriptor:
-      displayName: Class Descriptor
+      displayName: 'Class Descriptor'
       get:
-        description: MS-05 Class Descriptor of this object.
+        description: 'Get MS-05 Class Descriptor of this object.'
         responses:
           200:
             body:
               example: !include ../examples/class-descriptor-get-200.json
               type: !include schemas/descriptor-get.json
           500:
-            description: Returned when the Class Descriptor of this object was unable to be retrieved. Corresponds to NcMethodStatus code 500.
+            description: 'Returned when the Class Descriptor of this object was unable to be retrieved. Corresponds to NcMethodStatus code 500.'
             body:
               type: !include schemas/ms05-error.json
