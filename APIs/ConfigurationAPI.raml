@@ -71,12 +71,12 @@ documentation:
             descriptions: Set value of a property
             body:
               example: !include ../examples/property-value-put.json
-              type: !include schemas/modify-property.json
+              type: !include schemas/property-value-put-request.json
             responses:
               200:
                 body:
                   example: !include ../examples/property-value-put-200.json
-                  type: !include schemas/property-value-put.json
+                  type: !include schemas/property-value-put-response.json
         /descriptor:
           displayName: Descriptor of property
           get:
@@ -85,7 +85,7 @@ documentation:
               200:
                 body:
                   example: !include ../examples/property-descriptor-get-200.json
-                  type: !include schemas/property-descriptor-get.json
+                  type: !include schemas/property-descriptor.json
     /methods:
       displayName: Methods
       get:
@@ -99,7 +99,7 @@ documentation:
         patch:
           description: Invoke method
           body:
-            type: !include schemas/invoke-method.json
+            type: !include schemas/method-patch-request.json
           responses:
             200:
               body:
