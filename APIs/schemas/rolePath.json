@@ -8,11 +8,10 @@
     "enum": [
       "properties/",
       "methods/",
-      "members/",
       "descriptors/"
     ]
   },
-  "minItems": 4,
-  "maxItems": 4,
+  "minItems": 3,
+  "maxItems": 3,
   "uniqueItems": true
 }
