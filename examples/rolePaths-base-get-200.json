@@ -1,0 +1,8 @@
+[
+  "root/",
+  "root.ClassManager/",
+  "root.DeviceManager/",
+  "root.StereoGain/",
+  "root.StereoGain.LeftChannel/",
+  "root.StereoGain.RightChannel/"
+]
