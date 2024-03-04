@@ -50,6 +50,9 @@ documentation:
       displayName: 'Bulk Properties'
       get:
         description: 'Get Bulk Properties of the object'
+        body:
+          example: !include ../examples/bulkPropertes-get-request.json
+          type: !include schemas/bulkPropertes-get-request.json
         queryParameters:
           recurse:
             description: True will get Bulk Properties for this object and all child objects
@@ -57,6 +60,8 @@ documentation:
         responses:
           200:
             body:
+              example: !include ../examples/bulkPropertes-get-response-200.json
+              type: !include schemas/bulkPropertes-get-response.json
     /properties:
       displayName: 'Properties'
       get:
@@ -176,30 +181,55 @@ documentation:
         displayName: 'Validate Bulk Properties'
         patch:
         description: 'Validate a Bulk Properties object against the Device Model'
+        body:
+          example: !include ../examples/bulkPropertes-validate-request.json
+          type: !include schemas/bulkPropertes-validate-request.json
         responses:
-            200:
-            body:
+          200:
+          body:
+            example: !include ../examples/bulkPropertes-validate-response-200.json
+            type: !include schemas/bulkPropertes-validate-response.json
     /set:
         displayName: 'Set Bulk Properties'
         put:
         description: 'Set a Bulk Properties object on the Device Model'
+        body:
+          example: !include ../examples/bulkPropertes-set-request.json
+          type: !include schemas/bulkPropertes-set-request.json
         responses:
-            200:
-            body:
+          200:
+          body:
+            example: !include ../examples/bulkPropertes-set-response-200.json
+            type: !include schemas/bulkPropertes-set-response.json
 /bulkProperties_alternative:
     displayName: 'Bulk Properties Functions'
     get:
     description: 'GET /rolePaths/root/bulkProperties'
+    body:
+      example: !include ../examples/bulkPropertes-get-request.json
+      type: !include schemas/bulkPropertes-get-request.json
     responses:
         200:
         body:
+          example: !include ../examples/bulkPropertes-get-response-200.json
+          type: !include schemas/bulkPropertes-get-response.json
     patch:
     description: 'Validate a Bulk Properties object against the Device Model'
+      body:
+        example: !include ../examples/bulkPropertes-validate-request.json
+        type: !include schemas/bulkPropertes-validate-request.json
     responses:
         200:
         body:
+          example: !include ../examples/bulkPropertes-validate-response-200.json
+          type: !include schemas/bulkPropertes-validate-response.json
     put:
     description: 'Set a Bulk Properties object on the Device Model'
+    body:
+      example: !include ../examples/bulkPropertes-set-request.json
+      type: !include schemas/bulkPropertes-set-request.json
     responses:
-        200:
-        body:
+      200:
+      body:
+        example: !include ../examples/bulkPropertes-set-response-200.json
+        type: !include schemas/bulkPropertes-set-response.json
