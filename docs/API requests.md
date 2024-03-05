@@ -4,7 +4,7 @@ The endpoints are documented in the [Configuration API](https://specs.amwa.tv/is
 
 ## Control session
 
-Concurrency control is left to specific device implementations, however devices MUST always return relevant error response messages and statuses when there are conflicts, errors or other noteworthy states (see [Error response messages](#error-response-messages)).
+Concurrency control is left to specific device implementations, however devices MUST always return relevant error response messages and statuses when there are conflicts, errors or other noteworthy states.
 
 ## URL and usage
 
