@@ -174,7 +174,7 @@ documentation:
       description: 'Shows the Bulk Properties functions'
       responses:
         200:
-        body:
+          body:
     /validate:
         displayName: 'Validate Bulk Properties'
         patch:
@@ -183,8 +183,8 @@ documentation:
             type: !include schemas/bulkPropertes-validate-request.json
           responses:
             200:
-            body:
-              type: !include schemas/bulkPropertes-validate-response.json
+              body:
+                type: !include schemas/bulkPropertes-validate-response.json
     /set:
         displayName: 'Set Bulk Properties'
         put:
@@ -193,8 +193,8 @@ documentation:
             type: !include schemas/bulkPropertes-set-request.json
           responses:
             200:
-            body:
-              type: !include schemas/bulkPropertes-set-response.json
+              body:
+                type: !include schemas/bulkPropertes-set-response.json
 /bulkProperties_alternative:
     displayName: 'Bulk Properties Functions'
     get:
@@ -203,21 +203,21 @@ documentation:
         type: !include schemas/bulkPropertes-get-request.json
       responses:
         200:
-        body:
-          type: !include schemas/bulkPropertes-get-response.json
+          body:
+            type: !include schemas/bulkPropertes-get-response.json
     patch:
       description: 'Validate a Bulk Properties object against the Device Model'
-        body:
-          type: !include schemas/bulkPropertes-validate-request.json
+      body:
+        type: !include schemas/bulkPropertes-validate-request.json
       responses:
         200:
-        body:
-          type: !include schemas/bulkPropertes-validate-response.json
+          body:
+            type: !include schemas/bulkPropertes-validate-response.json
     put:
       description: 'Set a Bulk Properties object on the Device Model'
       body:
         type: !include schemas/bulkPropertes-set-request.json
       responses:
         200:
-        body:
-          type: !include schemas/bulkPropertes-set-response.json
+          body:
+            type: !include schemas/bulkPropertes-set-response.json
