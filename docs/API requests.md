@@ -112,7 +112,3 @@ The response MUST be of type [NcMethodResult](https://specs.amwa.tv/ms-05-02/lat
 This is equivalent to invoking the specified method.
 
 `TODO`: Figure out how we map deprecation statuses for properties and methods.
-
-## Error response messages
-
-When any request encounters an error, the response MUST be [NcMethodResultError](https://specs.amwa.tv/ms-05-02/latest/docs/Framework.html#ncmethodresulterror) or a derived datatype.
