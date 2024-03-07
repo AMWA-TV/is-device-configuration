@@ -1,0 +1,14 @@
+{
+  "value": [
+    {
+      "rolePath": [ "root", "stereo-gain" ],
+      "status": 200,
+      "statusMessage": "OK"
+    },
+    {
+      "rolePath": [ "root", "channel-gain" ],
+      "status": 200,
+      "statusMessage": "OK"
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "status": 200,
+  "validationFingerprint": null,
+  "values": [
+    {
+      "rolePath": [ "root", "stereo-gain" ],
+      "values": [
+        {
+          "id": {
+            "level": 1,
+            "index": 6
+          },
+          "name": "userLabel",
+          "isReadOnly": false,
+          "value": "this is the property value"
+        },
+        {
+          "id": {
+            "level": 2,
+            "index": 1
+          },
+          "name": "enabled",
+          "isReadOnly": false,
+          "value": true
+        }
+      ]
+    }
+  ]
+}

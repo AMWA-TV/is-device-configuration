@@ -1,0 +1,56 @@
+{
+  "arguments": {
+    "dataSet": {
+      "validationFingerprint": null,
+      "values": [
+        {
+          "rolePath": [ "root", "stereo-gain" ],
+          "values": [
+            {
+              "id": {
+                "level": 1,
+                "index": 6
+              },
+              "name": "userLabel",
+              "isReadOnly": false,
+              "value": "Stereo Gain Block"
+            },
+            {
+              "id": {
+                "level": 2,
+                "index": 1
+              },
+              "name": "enabled",
+              "isReadOnly": false,
+              "value": true
+            }
+          ]
+        },
+        {
+          "rolePath": [ "root", "channel-gain" ],
+          "values": [
+            {
+              "id": {
+                "level": 1,
+                "index": 6
+              },
+              "name": "userLabel",
+              "isReadOnly": false,
+              "value": "Channel Gain Block"
+            },
+            {
+              "id": {
+                "level": 2,
+                "index": 1
+              },
+              "name": "enabled",
+              "isReadOnly": false,
+              "value": true
+            }
+          ]
+        }
+      ]
+    },
+    "recurse": false
+  }
+}
