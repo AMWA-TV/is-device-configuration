@@ -27,7 +27,7 @@ documentation:
 /rolePaths:
   displayName: 'Role Paths'
   get:
-    description: 'Returns the Role Paths of the Device Model'
+    description: 'Returns the Role Paths of the Device Model. Each rolePath MUST be created by appending NcObject roles starting with the root block and using "." as the delimiter'
     responses:
       200:
         body:
@@ -63,7 +63,7 @@ documentation:
     /properties:
       displayName: 'Properties'
       get:
-        description: 'Get Properties of the object'
+        description: 'Get Properties of the object. This response MUST include all object properties including all the inherited properties'
         responses:
           200:
             body:
@@ -112,7 +112,7 @@ documentation:
         /descriptor:
           displayName: 'Datatype Descriptor of property'
           get:
-            description: 'Get MS-05 Datatype Descriptor of property'
+            description: 'Get MS-05 Datatype Descriptor of property. This descriptor MUST include all inherited elements'
             responses:
               200:
                 body:
@@ -125,7 +125,7 @@ documentation:
     /methods:
       displayName: 'Methods'
       get:
-        description: 'Get Methods of this object.'
+        description: 'Get Methods of this object. This response MUST include all object methods including all the inherited methods'
         responses:
           200:
             body:
@@ -158,7 +158,7 @@ documentation:
     /descriptor:
       displayName: 'Class Descriptor'
       get:
-        description: 'Get MS-05 Class Descriptor of this object.'
+        description: 'Get MS-05 Class Descriptor of this object. This descriptor MUST include all inherited elements'
         responses:
           200:
             body:
