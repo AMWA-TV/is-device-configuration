@@ -58,25 +58,27 @@ documentation:
           200:
             body:
               type: !include schemas/bulkProperties-get-response.json
-              example: !include examples/bulkProperties-get-200.json
+              example: !include ../examples/bulkProperties-get-200.json
       options:
         description: 'Validate an NcBulkValuesHolder object against the Device Model'
         body:
           type: !include schemas/bulkProperties-validate-request.json
-          example: !include examples/bulkProperties-validate-request.json
+          example: !include ../examples/bulkProperties-validate-request.json
         responses:
           200:
             body:
               type: !include schemas/bulkProperties-validate-response.json
-              example: !include examples/bulkProperties-validate-200.json
+              example: !include ../examples/bulkProperties-validate-200.json
       put:
         description: 'Set a Bulk Properties object on the Device Model'
         body:
           type: !include schemas/bulkProperties-set-request.json
+          example: !include ../examples/bulkProperties-set-request.json
         responses:
           200:
             body:
               type: !include schemas/bulkProperties-set-response.json
+              example: !include ../examples/bulkProperties-set-200.json
     /properties:
       displayName: 'Properties'
       get:
