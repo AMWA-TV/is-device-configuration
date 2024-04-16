@@ -6,8 +6,6 @@
 
 _(c) AMWA 2023, CC Attribution-NoDerivatives 4.0 International (CC BY-ND 4.0)_
 
-![NMOS logo](images/NMOS-logo.png)
-
 ## Introduction
 
 This document aims to give a general description of the NMOS Device Configuration API. This API defines how NMOS Control models (described in the NMOS Control Framework) can be exposed and consumed in a standardized way when using HTTP.
@@ -22,16 +20,8 @@ This API does not support subscriptions and notifications. For subscriptions and
 ## Use of Normative Language
 
 The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY",
-and "OPTIONAL" in this document are to be interpreted as described in [RFC 2119][RFC-2119].
+and "OPTIONAL" in this document are to be interpreted as described in [RFC-2119](https://datatracker.ietf.org/doc/html/rfc2119).
 
 ## Definitions
 
 The NMOS term 'Device' is used as defined in the [NMOS Glossary](https://specs.amwa.tv/nmos/main/docs/Glossary.html).
-
-This specification also defines the following terms.
-
-### Example Term
-
-Example definition
-
-[RFC-2119]: https://tools.ietf.org/html/rfc2119 "Key words for use in RFCs"

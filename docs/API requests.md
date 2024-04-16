@@ -30,13 +30,16 @@ This means for a given base URL the `root` block can be targeted by using `{base
 
 The following subsections define common use cases for the applicable HTTP verbs where resources are located using their associated `rolePath`.
 
-| Verb  | Scenario                                                                  | URL format                                                      | Body                                                                                                                     | Response                                                                                                                                               |
-| ----- | ------------------------------------------------------------------------- | --------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| GET   | [Get a property](#getting-a-property)                                     | baseUrl/rolePaths/{rolePath}/properties/{propertyId}/value      | N/A                                                                                                                      | [NcMethodResultPropertyValue](https://specs.amwa.tv/ms-05-02/latest/docs/Framework.html#ncmethodresultpropertyvalue) with the contents of the property |
-| GET   | [Get class descriptor](#getting-the-class-descriptor-of-an-object)        | baseUrl/rolePaths/{rolePath}/descriptor                         | N/A                                                                                                                      | [NcMethodResultClassDescriptor](https://specs.amwa.tv/ms-05-02/latest/docs/Framework.html#ncmethodresultclassdescriptor)                               |
-| GET   | [Get datatype descriptor](#getting-the-datatype-descriptor-of-a-property) | baseUrl/rolePaths/{rolePath}/properties/{propertyId}/descriptor | N/A                                                                                                                      | [NcMethodResultDatatypeDescriptor](https://specs.amwa.tv/ms-05-02/latest/docs/Framework.html#ncmethodresultdatatypedescriptor)                         |
-| PUT   | [Modify a property](#put)                                                 | baseUrl/rolePaths/{rolePath}/properties/{propertyId}/value      | [property-value-put-request](https://specs.amwa.tv/is-14/branches/v1.0-dev/APIs/schemas/property-value-put-request.json) | [NcMethodResult](https://specs.amwa.tv/ms-05-02/latest/docs/Framework.html#ncmethodresult)                                                             |
-| PATCH | [Invoke a method](#patch)                                                 | baseUrl/rolePaths/{rolePath}/methods/{methodId}                 | [method-patch-request](https://specs.amwa.tv/is-14/branches/v1.0-dev/APIs/schemas/method-patch-request.json)             | [NcMethodResult](https://specs.amwa.tv/ms-05-02/latest/docs/Framework.html#ncmethodresult)                                                             |
+| Verb    | Scenario                                                                                                | URL format                                                      | Body                                                                                                                               | Response                                                                                                                                                                                               |
+| ------- | ------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| GET     | [Get a property](#getting-a-property)                                                                   | baseUrl/rolePaths/{rolePath}/properties/{propertyId}/value      | N/A                                                                                                                                | [NcMethodResultPropertyValue](https://specs.amwa.tv/ms-05-02/latest/docs/Framework.html#ncmethodresultpropertyvalue) with the contents of the property                                                 |
+| GET     | [Get class descriptor](#getting-the-class-descriptor-of-an-object)                                      | baseUrl/rolePaths/{rolePath}/descriptor                         | N/A                                                                                                                                | [NcMethodResultClassDescriptor](https://specs.amwa.tv/ms-05-02/latest/docs/Framework.html#ncmethodresultclassdescriptor)                                                                               |
+| GET     | [Get datatype descriptor](#getting-the-datatype-descriptor-of-a-property)                               | baseUrl/rolePaths/{rolePath}/properties/{propertyId}/descriptor | N/A                                                                                                                                | [NcMethodResultDatatypeDescriptor](https://specs.amwa.tv/ms-05-02/latest/docs/Framework.html#ncmethodresultdatatypedescriptor)                                                                         |
+| GET     | [Getting all the properties of a role path](#getting-all-the-properties-of-a-role-path)                 | baseUrl/rolePaths/{rolePath}/bulkProperties?recurse={value}     | N/A                                                                                                                                | [NcMethodResultBulkValuesHolder](https://specs.amwa.tv/nmos-control-feature-sets/branches/publish-device-configuration/device-configuration/#ncmethodresultbulkvaluesholder)                           |
+| PUT     | [Modify a property](#changing-a-property)                                                               | baseUrl/rolePaths/{rolePath}/properties/{propertyId}/value      | [property-value-put-request](https://specs.amwa.tv/is-14/branches/v1.0-dev/APIs/schemas/property-value-put-request.json)           | [NcMethodResult](https://specs.amwa.tv/ms-05-02/latest/docs/Framework.html#ncmethodresult)                                                                                                             |
+| PUT     | [Setting bulk properties for a role path](#setting-bulk-properties-for-a-role-path)       | baseUrl/rolePaths/{rolePath}/bulkProperties                     | [bulkProperties-set-request](https://specs.amwa.tv/is-14/branches/v1.0-dev/APIs/schemas/bulkProperties-set-request.json)           | [NcMethodResultObjectPropertiesSetValidation](https://specs.amwa.tv/nmos-control-feature-sets/branches/publish-device-configuration/device-configuration/#ncmethodresultobjectpropertiessetvalidation) |
+| PATCH   | [Invoke a method](#invoking-a-method)                                                                   | baseUrl/rolePaths/{rolePath}/methods/{methodId}                 | [method-patch-request](https://specs.amwa.tv/is-14/branches/v1.0-dev/APIs/schemas/method-patch-request.json)                       | [NcMethodResult](https://specs.amwa.tv/ms-05-02/latest/docs/Framework.html#ncmethodresult)                                                                                                             |
+| OPTIONS | [Validating bulk properties for a role path](#validating-bulk-properties-for-a-role-path) | baseUrl/rolePaths/{rolePath}/bulkProperties                     | [bulkProperties-validate-request](https://specs.amwa.tv/is-14/branches/v1.0-dev/APIs/schemas/bulkProperties-validate-request.json) | [NcMethodResultObjectPropertiesSetValidation](https://specs.amwa.tv/nmos-control-feature-sets/branches/publish-device-configuration/device-configuration/#ncmethodresultobjectpropertiessetvalidation) |
 
 ## GET
 
@@ -70,13 +73,25 @@ The URL MUST target a specific property of an object by locating the object usin
 
 This is equivalent to invoking the [GetDatatype method](https://specs.amwa.tv/ms-05-02/latest/docs/Framework.html#ncclassmanager) on the [Class Manager object](https://specs.amwa.tv/ms-05-02/latest/docs/Managers.html#class-manager) and including all inherited elements.
 
+### Getting all the properties of a role path
+
+| ![Getting bulk properties](images/getting-bulk-properties.png) |
+|:--:|
+| _**Getting bulk properties**_ |
+
+The URL MUST target a specific role path in the device model. Devices treat this as a request to retrieve all the properties of that role path inside a [bulk values holder](https://specs.amwa.tv/nmos-control-feature-sets/branches/publish-device-configuration/device-configuration/#ncbulkvaluesholder) and MUST return a response of type [NcMethodResultBulkValuesHolder](https://specs.amwa.tv/nmos-control-feature-sets/branches/publish-device-configuration/device-configuration/#ncmethodresultbulkvaluesholder). If the `recurse` query parameter is set to `true` then the response will include the values of the target role path as well as any nested role paths. Not including the `recurse` query parameter MUST be treated as providing a `recurse` value of `true`. If the request encountered an error then the response result returned MUST inherit from [NcMethodResultError](https://specs.amwa.tv/ms-05-02/latest/docs/Framework.html#ncmethodresulterror) and include an errorMessage of type [NcString](https://specs.amwa.tv/ms-05-02/latest/docs/Framework.html#primitives).
+
+This is equivalent to invoking the `GetPropertiesByPath` method on the [Bulk properties manager object](https://specs.amwa.tv/nmos-control-feature-sets/branches/publish-device-configuration/device-configuration/#ncbulkpropertiesmanager).
+
 ## PUT
+
+### Changing a property
 
 | ![Putting a property](images/putting-a-property.png) |
 |:--:|
 | _**Putting a property**_ |
 
-The PUT verb MUST only be used for setting individual object properties.
+The PUT verb MUST be used for setting individual object properties.
 
 The URL MUST target a specific property of an object by locating the object using its role path and the property using its propertyId. The response MUST be of type [NcMethodResult](https://specs.amwa.tv/ms-05-02/latest/docs/Framework.html#ncmethodresult). If the request encountered an error then the response result returned MUST inherit from [NcMethodResultError](https://specs.amwa.tv/ms-05-02/latest/docs/Framework.html#ncmethodresulterror) and include an errorMessage of type [NcString](https://specs.amwa.tv/ms-05-02/latest/docs/Framework.html#primitives).
 
@@ -86,13 +101,45 @@ This is equivalent to invoking the generic [Set method](https://specs.amwa.tv/ms
 
 `TODO`: Figure out how we map deprecation statuses for properties and methods.
 
+### Setting bulk properties for a role path
+
+| ![Setting bulk properties](images/set-bulk-properties.png) |
+|:--:|
+| _**Setting bulk properties**_ |
+
+The PUT verb MUST be used for setting a bulk properties data set.
+
+The URL MUST target a specific role path.
+The body of the request MUST include an object which includes an `arguments` object with `dataSet` and `recurse` sub elements.
+
+```json
+{
+    "arguments": {
+        "dataSet": {
+            ...
+        },
+        "recurse": true
+    }
+}
+```
+
+If the `recurse` value is `true` then the device will attempt to use the provided `dataSet` to set the properties of the target role path and all nested role paths.
+
+For a full schema of the required body object see the [bulkProperties-set-request](https://specs.amwa.tv/is-14/branches/v1.0-dev/APIs/schemas/bulkProperties-set-request.json) schema.
+
+The response MUST be of type [NcMethodResultObjectPropertiesSetValidation](https://specs.amwa.tv/nmos-control-feature-sets/branches/publish-device-configuration/device-configuration/#ncmethodresultobjectpropertiessetvalidation). If the request encountered an error then the response result returned MUST inherit from [NcMethodResultError](https://specs.amwa.tv/ms-05-02/latest/docs/Framework.html#ncmethodresulterror) and include an errorMessage of type [NcString](https://specs.amwa.tv/ms-05-02/latest/docs/Framework.html#primitives).
+
+This is equivalent to invoking the `SetPropertiesByPath` method inside the [Bulk properties manager object](https://specs.amwa.tv/nmos-control-feature-sets/branches/publish-device-configuration/device-configuration/#ncbulkpropertiesmanager).
+
 ## PATCH
+
+### Invoking a method
 
 | ![Invoking a method](images/invoking-a-method.png) |
 |:--:|
 | _**Invoking a method**_ |
 
-The PATCH verb MUST only be used for invoking object methods.
+The PATCH verb MUST be used for invoking object methods.
 
 The URL MUST target a specific object by locating the object using its role path.
 The body of the request MUST include an object which includes an `arguments` object. For methods which do not have arguments defined the request body MUST include an empty `arguments` object.
@@ -112,3 +159,35 @@ The response MUST be of type [NcMethodResult](https://specs.amwa.tv/ms-05-02/lat
 This is equivalent to invoking the specified method.
 
 `TODO`: Figure out how we map deprecation statuses for properties and methods.
+
+## OPTIONS
+
+### Validating bulk properties for a role path
+
+| ![Validating bulk properties](images/validate-bulk-properties.png) |
+|:--:|
+| _**Validating bulk properties**_ |
+
+The OPTIONS verb MUST be used for validating a bulk properties data set.
+
+The URL MUST target a specific role path.
+The body of the request MUST include an object which includes an `arguments` object with `dataSet` and `recurse` sub elements.
+
+```json
+{
+    "arguments": {
+        "dataSet": {
+            ...
+        },
+        "recurse": true
+    }
+}
+```
+
+If the `recurse` value is `true` then the device will attempt to use the provided `dataSet` to validate the target role path and all nested role paths.
+
+For a full schema of the required body object see the [bulkProperties-validate-request](https://specs.amwa.tv/is-14/branches/v1.0-dev/APIs/schemas/bulkProperties-validate-request.json) schema.
+
+The response MUST be of type [NcMethodResultObjectPropertiesSetValidation](https://specs.amwa.tv/nmos-control-feature-sets/branches/publish-device-configuration/device-configuration/#ncmethodresultobjectpropertiessetvalidation). If the request encountered an error then the response result returned MUST inherit from [NcMethodResultError](https://specs.amwa.tv/ms-05-02/latest/docs/Framework.html#ncmethodresulterror) and include an errorMessage of type [NcString](https://specs.amwa.tv/ms-05-02/latest/docs/Framework.html#primitives).
+
+This is equivalent to invoking the `ValidateSetPropertiesByPath` method inside the [Bulk properties manager object](https://specs.amwa.tv/nmos-control-feature-sets/branches/publish-device-configuration/device-configuration/#ncbulkpropertiesmanager).
