@@ -9,7 +9,7 @@
 - [API requests](API%20requests.md)
 - [Data type marshalling](Data%20type%20marshalling.md)
 - [IS-04 interactions](IS-04%20interactions.md)
-- [Backup & restore](Backup%20%26%20restore.md)
+- [Backup & restore](Backup%20&%20restore.md)
 
 ### Examples
 
