@@ -82,4 +82,4 @@ Devices MUST allow the partial restoration of backups which have at least one ro
 
 // TODO: Is this a MUST?
 
-// TBD: What is the new unit overwrites things like IP addresses? Are we saying the restore should be used as a bootstrap mechanism?
+// TBD: What if the new unit overwrites things like IP addresses? Are we saying the restore should be used as a bootstrap mechanism?
