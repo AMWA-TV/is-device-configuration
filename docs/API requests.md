@@ -118,7 +118,8 @@ The body of the request MUST include an object which includes an `arguments` obj
         "dataSet": {
             ...
         },
-        "recurse": true
+        "recurse": true,
+        "allowPartial": true
     }
 }
 ```

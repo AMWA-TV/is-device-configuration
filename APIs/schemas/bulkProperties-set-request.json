@@ -17,6 +17,9 @@
         },
         "recurse": {
           "type": "boolean"
+        },
+        "allowPartial": {
+          "type": "boolean"
         }
       }
     }
