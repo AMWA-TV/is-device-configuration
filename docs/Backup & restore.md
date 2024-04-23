@@ -19,7 +19,7 @@ These mechanisms are used for enabling backup and restore functionality and this
 
 Creating a backup is performed by using the `bulkProperties` endpoint of a device alongside the [Get verb](https://specs.amwa.tv/is-14/branches/v1.0-dev/docs/API_requests.html#getting-all-the-properties-of-a-role-path).
 
-Requests MUST use `root` as the `rolePath` alongside a query parameter `recurse=true` in order to retrieve the whole device model (full backup). The response contains a `validationFingerprint` and the `values` of all the role paths in the device model.
+In order to retrieve the whole device model (full backup), requests MUST use `root` as the `rolePath` alongside a query parameter `recurse=true`. The response contains a `validationFingerprint` and the `values` of all the role paths in the device model.
 The `validationFingerprint` is a generic string field (format is implementation specific) which can be used by device implementations to perform quick validations when restoring. This may have information like:
 
 - Manufacturer key
@@ -35,16 +35,18 @@ The `validationFingerprint` is a generic string field (format is implementation 
 
 Partial backups can be created by choosing other role paths and using a query parameter of `recurse=false`.
 
+It is recommended to store the backup file in its entirety and not remove elements from the data set as they might contain dependencies required by some of the role paths.
+
 ## 2. Restoring same unit and same version
 
 Assuming we have created a [full backup](#1-performing-a-backup) of our unit and we plan to use it on the same unit with the same version then we first perform a [Validation request](https://specs.amwa.tv/is-14/branches/v1.0-dev/docs/API_requests.html#validating-bulk-properties-for-a-role-path) to check if our backup can be successfully restored.
 
-Requests MUST use `root` as the `rolePath` in order to validate the whole device model (validating a full backup).
+In order to validate the whole device model (validating a full backup), requests MUST use `root` as the `rolePath`.
 
-Requests MUST include:
+The request body MUST include:
 
 - the backup dataSet
-- a boolean `recurse` argument set to `true` for validating the whole device model
+- a boolean `recurse` argument (set to `true` for validating the whole device model)
 
 | ![Validating a full backup](images/validating-full-backup.png) |
 |:--:|
@@ -52,15 +54,17 @@ Requests MUST include:
 
 The response MUST include a collection of all target device model role paths with a validation `status` property. For role paths which have a `status` other than `Ok` the response MUST also include a `statusMessage` with details of why the validation failed.
 
+//TBD: Do we need to give more detailed examples of statuses and statusMessages?
+
 We can then proceed with restoring the backup by performing a [Set request](https://specs.amwa.tv/is-14/branches/v1.0-dev/docs/API_requests.html#validating-bulk-properties-for-a-role-path) to restore our backup.
 
-Requests MUST use `root` as the `rolePath` in order to restore the whole device model (restoring a full backup).
+In order to restore the whole device model (restoring a full backup), requests MUST use `root` as the `rolePath`.
 
-Requests MUST include:
+The request body MUST include:
 
 - the backup dataSet
-- a boolean `recurse` argument set to `true` for validating the whole device model
-- a boolean `allowPartial` argument. This allows clients to control if the device should still perform a partial restore when some role paths fail validation (only of the role paths which have been validated successfully are restored)
+- a boolean `recurse` argument (set to `true` for validating the whole device model)
+- a boolean `allowPartial` argument. This allows clients to control if the device should still perform a partial restore when some role paths fail validation (only the role paths which have been validated successfully are restored)
 
 | ![Restoring a full backup](images/restoring-full-backup.png) |
 |:--:|
@@ -68,11 +72,15 @@ Requests MUST include:
 
 The response MUST include a collection of all target device model role paths with a restore `status` property. For role paths which have a `status` other than `Ok` the response MUST also include a `statusMessage` with details of why the restore failed.
 
-It is expected that a `full backup` performed on the same unit and restored on the same unit and same version MUST be supported by the unit.
+//TBD: Do we need to give more detailed examples of statuses and statusMessages?
+
+A `full backup` performed on the same unit and restored on the same unit and same version MUST be supported by the device.
 
 Devices MUST allow the partial restoration of backups which have at least one role path `status` of `Ok` when supplying the `allowPartial` argument of `true` in the request.
 
-//TODO: Do we think some devices may need to be put in maintenance mode for this to work?
+Devices MUST allow restoration of modified backups (full or partial backups where the data sets have been modified by a controller or provisioning tool) which have at least one role path `status` of `Ok` when supplying the `allowPartial` argument of `true` in the request.
+
+//TODO: Do we think some devices may need to be put in maintenance mode for restore to work?
 
 ## 3. Restoring same unit but different version
 
