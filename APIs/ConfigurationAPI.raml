@@ -102,7 +102,10 @@ documentation:
               example: !include ../examples/methods-base-get-200.json
               type: !include schemas/methods-base.json
       /{methodId}:
-        displayName: 'Invoke Method.'
+        uriParameters:
+            methodId:
+            type: string
+            pattern: "^[0-9]+m[0-9]+$"
         patch:
           description: 'Invoke method.'
           body:
@@ -135,7 +138,10 @@ documentation:
               example: !include ../examples/properties-base-get-200.json
               type: !include schemas/properties-base.json
       /{propertyId}:
-        displayName: 'Attributes of a Property'
+        uriParameters:
+            methodId:
+            type: string
+            pattern: "^[0-9]+p[0-9]+$"
         get:
           description: 'Get attributes of a Property'
           responses:
