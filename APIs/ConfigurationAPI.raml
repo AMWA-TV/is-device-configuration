@@ -34,7 +34,9 @@ documentation:
           example: !include ../examples/rolePaths-base-get-200.json
           type: !include schemas/rolePaths-base.json
   /{rolePath}:
-    displayName: 'Attributes of a Role Path'
+    uriParameters:
+        rolePath:
+            type: string
     get:
       description: 'Get attributes of the object specified by rolePath'
       responses:
@@ -104,8 +106,8 @@ documentation:
       /{methodId}:
         uriParameters:
             methodId:
-            type: string
-            pattern: "^[0-9]+m[0-9]+"
+                type: string
+                pattern: "^[0-9]+m[0-9]+"
         patch:
           description: 'Invoke method.'
           body:
