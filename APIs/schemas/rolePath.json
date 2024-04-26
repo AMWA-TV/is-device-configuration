@@ -6,7 +6,7 @@
   "items": {
     "type": "string",
     "enum": [
-      "bulkProperties",
+      "bulkProperties/",
       "descriptors/",
       "methods/",
       "properties/"
