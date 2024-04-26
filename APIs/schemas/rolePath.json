@@ -7,7 +7,7 @@
     "type": "string",
     "enum": [
       "bulkProperties/",
-      "descriptors/",
+      "descriptor/",
       "methods/",
       "properties/"
     ]
