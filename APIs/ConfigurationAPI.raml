@@ -141,9 +141,9 @@ documentation:
               type: !include schemas/properties-base.json
       /{propertyId}:
         uriParameters:
-            methodId:
-            type: string
-            pattern: "^[0-9]+p[0-9]+"
+            propertyId:
+                type: string
+                pattern: "^[0-9]+p[0-9]+"
         get:
           description: 'Get attributes of a Property'
           responses:
