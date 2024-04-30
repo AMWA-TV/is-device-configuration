@@ -1,6 +1,6 @@
 [
-  "bulkProperties",
-  "descriptors/",
+  "bulkProperties/",
+  "descriptor/",
   "methods/",
   "properties/"
 ]
