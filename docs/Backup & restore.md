@@ -9,11 +9,11 @@ The [Configuration API](https://specs.amwa.tv/is-14/branches/v1.0-dev/APIs/Confi
 These mechanisms are used for enabling backup and restore functionality and this section of the specification aims to cover the expectations, behaviour and requirements for the following scenarios:
 
 - [Performing a backup](#1-performing-a-backup)
-- Restoring a backup on the [same unit and the same software version](#2-restoring-same-unit-and-same-software-version)
-- Restoring a backup on the [same unit but different software version](#3-restoring-same-unit-but-different-software-version)
-- Restoring a backup on a [different unit using the same software version](#4-restoring-different-unit-using-the-same-software-version)
+- Restoring a backup on the [same device instance and the same device-revision](#2-restoring-same-device-instance-and-the-same-device-revision)
+- Restoring a backup on the [same device instance but different device-revision](#3-restoring-same-device-instance-but-different-device-revision)
+- Restoring a backup on a [different instance of the same device type using the same device revision](#4-restoring-different-instance-of-the-same-device-type-using-the-same-device-revision)
 
-where `software version` means any combination of software that dictates the functionality of the device (this includes firmware).
+where `device-revision` means any combination of software versions (this includes firmware) and hardware revision that dictates the functionality of the device.
 
 `Note`: This does not mean that the backup & restore functionality can only be used in these scenarios.
 
@@ -27,6 +27,7 @@ The `validationFingerprint` is a generic string field (format is implementation 
 - Manufacturer key
 - Product key
 - Software versions
+- Hardware revisions
 - Backup response hash
 - Whether its a full device model backup or a subset
 
@@ -38,9 +39,9 @@ Partial backups can be created by choosing other role paths. The scope of backup
 
 It is RECOMMENDED to store the backup file in its entirety and not remove elements from the data set as they might contain dependencies required by some of the role paths.
 
-## 2. Restoring same unit and same software version
+## 2. Restoring same device instance and the same device-revision
 
-Assuming a [full backup](#1-performing-a-backup) of the unit was created and is intended to be restored on the same unit with the same version then the first step is to perform a [Validation request](https://specs.amwa.tv/is-14/branches/v1.0-dev/docs/API_requests.html#validating-bulk-properties-for-a-role-path) to check if the backup can be successfully restored.
+Assuming a [full backup](#1-performing-a-backup) of the device was created and is intended to be restored on the same device with the same device-revision then the first step is to perform a [Validation request](https://specs.amwa.tv/is-14/branches/v1.0-dev/docs/API_requests.html#validating-bulk-properties-for-a-role-path) to check if the backup can be successfully restored.
 
 In order to validate the whole device model (validating a full backup), requests MUST use `root` as the `rolePath`.
 
@@ -71,7 +72,7 @@ The request body MUST include:
 
 The response MUST include a collection of all target device model role paths with a restore `status` property. For role paths which have a `status` other than `Ok` the response MUST also include a `statusMessage` with details of why the restore failed.
 
-A `full backup` performed on the same unit and restored on the same unit and same software version MUST be supported by the device.
+A `full backup` performed and restored on the same device instance with the same device-revision MUST be supported by the device.
 
 Devices MUST allow the partial restoration of backups which have at least one role path `status` of `Ok` when supplying the `allowPartial` argument of `true` in the request.
 
@@ -83,12 +84,12 @@ Devices MUST allow restoration of modified backups (full or partial backups wher
 
 // TBD: Do we think some devices may need to reboot in order to apply a restore?
 
-## 3. Restoring same unit but different software version
+## 3. Restoring same device instance but different device-revision
 
-// TBD: Do we want to make this a MUST within the same Major software version number?
+// TBD: Do we want to make this a MUST within the same Major version/revision number?
 
-## 4. Restoring different unit using the same software version
+## 4. Restoring different instance of the same device type using the same device revision
 
 // TBD: Is this a MUST?
 
-// TBD: What if the new unit overwrites things like IP addresses? Are we saying the restore should be used as a bootstrap mechanism (do we need a isTemplate boolean flag when restoring)?
+// TBD: What if the new device overwrites things like IP addresses? Are we saying the restore should be used as a bootstrap mechanism (do we need a isTemplate boolean flag when restoring)?
