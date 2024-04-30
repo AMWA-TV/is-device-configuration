@@ -12,6 +12,7 @@
                 "index": 6
               },
               "name": "userLabel",
+              "typeName": "NcString",
               "isReadOnly": false,
               "value": "Stereo Gain Block"
             },
@@ -21,6 +22,7 @@
                 "index": 1
               },
               "name": "enabled",
+              "typeName": "NcBoolean",
               "isReadOnly": false,
               "value": true
             }
@@ -35,6 +37,7 @@
                 "index": 6
               },
               "name": "userLabel",
+              "typeName": "NcString",
               "isReadOnly": false,
               "value": "Channel Gain Block"
             },
@@ -44,6 +47,7 @@
                 "index": 1
               },
               "name": "enabled",
+              "typeName": "NcBoolean",
               "isReadOnly": false,
               "value": true
             }
@@ -51,6 +55,7 @@
         }
       ]
     },
-    "recurse": false
+    "recurse": true,
+    "allowPartial": true
   }
 }
