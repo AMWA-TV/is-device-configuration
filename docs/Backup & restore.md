@@ -105,4 +105,4 @@ A `device`, for the purposes of this section, is a physical or logical entity th
 - Timestamp
 - Whether its a full device model backup or a subset
 
-A `compatible revision` is a change of `device revision` such that all of the `backup data set` taken before the revision can be successfully validated by the modified device.
+A `compatible revision` is a change of `device revision` such that all of the `backup data set` taken before the revision can be successfully validated by the modified device. If the `backup data set` can not be successfully validated it is said to be an `incompatible revision`.
