@@ -89,7 +89,7 @@ Devices MUST allow the partial restoration of backups which have at least one ro
 
 ## Definitions
 
-A `device`, for the purposes of this section, is a physical or logical entity that can be backed up and restored using the procedures described. It may or may not correspond to an IS-04 Device or IS-04 Node.
+A `device`, for the purposes of this section, is a physical or logical entity that can be backed up and restored using the procedures described. It is not necessarily the same entity as an IS-04 Device or IS-04 Node, but it can be.
 
 `Backup data set` is the set of data retrieved from a device using the backup procedures described.
 
