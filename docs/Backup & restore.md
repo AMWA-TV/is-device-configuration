@@ -46,7 +46,7 @@ A `complete restore` is when all properties for all role paths in a `full backup
 
 An `incomplete restore` is when some properties of a `full backup` or `partial backup` are not successfully applied to a `device`. This might occur when a `backup data set` is restored to an `incompatible revision`. This is achieved by using the [/bulkProperties endpoint](https://specs.amwa.tv/is-14/branches/v1.0-dev/docs/API_requests.html#setting-bulk-properties-for-a-role-path).
 
-A `selective restore` can be used to apply only selected parts of a `backup set` to a device. This is achieved by using the [/bulkProperties endpoint](https://specs.amwa.tv/is-14/branches/v1.0-dev/docs/API_requests.html#setting-bulk-properties-for-a-role-path).
+A `selective restore` is when a subset of a `backup data set` is applied to a device. This is achieved by using the [/bulkProperties endpoint](https://specs.amwa.tv/is-14/branches/v1.0-dev/docs/API_requests.html#setting-bulk-properties-for-a-role-path).
 
 ## 1. Performing a backup
 
