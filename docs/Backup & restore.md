@@ -42,11 +42,11 @@ A `full backup` is a `backup data set` that includes all properties for all role
 
 A `partial backup` is a `backup data set` that includes only a subset of role paths of a device model. This is achieved by using the [/bulkProperties endpoint](https://specs.amwa.tv/is-14/branches/v1.0-dev/docs/API_requests.html#getting-all-the-properties-of-a-role-path).
 
-A `complete restore` is when all properties for all role paths in a `full backup` or `partial backup` are successfully applied to a `device`. This is achieved by using the [/bulkProperties endpoint](https://specs.amwa.tv/is-14/branches/v1.0-dev/docs/API_requests.html#setting-bulk-properties-for-a-role-path).
+A `complete restore` occurs when all properties for all role paths in a `full backup` or `partial backup` are successfully applied to a `device`. This is achieved by using the [/bulkProperties endpoint](https://specs.amwa.tv/is-14/branches/v1.0-dev/docs/API_requests.html#setting-bulk-properties-for-a-role-path).
 
-An `incomplete restore` is when some properties of a `full backup` or `partial backup` are not successfully applied to a `device`. This might occur when a `backup data set` is restored to an `incompatible revision`. This is achieved by using the [/bulkProperties endpoint](https://specs.amwa.tv/is-14/branches/v1.0-dev/docs/API_requests.html#setting-bulk-properties-for-a-role-path).
+An `incomplete restore` occurs when some properties of a `full backup` or `partial backup` are not successfully applied to a `device`. This might occur when a `backup data set` is restored to an `incompatible revision`. This is achieved by using the [/bulkProperties endpoint](https://specs.amwa.tv/is-14/branches/v1.0-dev/docs/API_requests.html#setting-bulk-properties-for-a-role-path).
 
-A `selective restore` is when a subset of a `backup data set` is applied to a device. This is achieved by using the [/bulkProperties endpoint](https://specs.amwa.tv/is-14/branches/v1.0-dev/docs/API_requests.html#setting-bulk-properties-for-a-role-path).
+A `selective restore` is a type of restore in which a `backup data set` is applied to a device. This is achieved by using the [/bulkProperties endpoint](https://specs.amwa.tv/is-14/branches/v1.0-dev/docs/API_requests.html#setting-bulk-properties-for-a-role-path).
 
 ## 1. Performing a backup
 

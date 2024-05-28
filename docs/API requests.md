@@ -105,7 +105,7 @@ The body of the request MUST include an object which includes the new value of t
 
 This is equivalent to invoking the generic [Set method](https://specs.amwa.tv/ms-05-02/latest/docs/NcObject.html#generic-getter-and-setter) on the specific object for the required property.
 
-`TODO`: Figure out how we map deprecation statuses for properties and methods.
+`TBD`: Figure out how we map deprecation statuses for properties and methods.
 
 ### Setting bulk properties for a role path
 
@@ -140,9 +140,9 @@ This is equivalent to invoking the `SetPropertiesByPath` method inside the [Bulk
 
 Setting properties through the `bulkProperties` endpoint allows a user to perform a `complete restore`, an `incomplete restore` or a `selective restore`.
 
-A `complete restore` is when a [full backup](Backup%20&%20restore.md#definitions) is applied as a `PUT` to the `/bulkProperties` endpoint of the root block with the `recurse` argument set to true, and all the properties of all role paths in the data set are applied successfully (their returned validation status is `Ok`). A `complete restore` can also be achieved when a [partial backup](Backup%20&%20restore.md#definitions) is applied and all the properties of all role paths in the data set are applied successfully (their returned validation status is `Ok`). If any of the properties return a validation status other than `Ok` then that is called an [incomplete restore](Backup%20&%20restore.md#definitions).
+A `complete restore` occurs when a [full backup](Backup%20&%20restore.md#definitions) is applied as a `PUT` to the `/bulkProperties` endpoint of the root block with the `recurse` argument set to true, and all the properties of all role paths in the data set are applied successfully (their returned validation status is `Ok`). A `complete restore` can also occur when a [partial backup](Backup%20&%20restore.md#definitions) is applied and all the properties of all role paths in the data set are applied successfully (their returned validation status is `Ok`). An [incomplete restore](Backup%20&%20restore.md#definitions) occurs when any of the properties restored returns a validation status other than `Ok`.
 
-A `selective restore` is when a [full backup](Backup%20&%20restore.md#definitions) or a [partial backup](Backup%20&%20restore.md#definitions) is applied as a `PUT` to the `/bulkProperties` endpoint of a role path which is not the root block. A selective restore can also be achieved by a `PUT` operation to the `/bulkProperties` endpoint of the root block with the `recurse` query parameter set to false which will result in restoring the properties of the root block only.
+A `selective restore` is a type of restore in which a [full backup](Backup%20&%20restore.md#definitions) or a [partial backup](Backup%20&%20restore.md#definitions) is applied as a `PUT` to the `/bulkProperties` endpoint of a role path which is not the root block. A selective restore can also be achieved by a `PUT` operation to the `/bulkProperties` endpoint of the root block with the `recurse` query parameter set to false which will result in restoring the properties of the root block only.
 
 ## PATCH
 
