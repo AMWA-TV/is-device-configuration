@@ -12,7 +12,7 @@ The URL provided in the [IS-04 device](IS-04%20interactions.md) is used as the b
 
 As described in the Configuration API, the [rolePaths](https://specs.amwa.tv/is-14/branches/v1.0-dev/APIs/ConfigurationAPI.html#rolepaths_get) endpoint MUST return all the device model's role paths. Each `rolePath` MUST be created by appending [NcObject roles](https://specs.amwa.tv/ms-05-02/latest/docs/NcObject.html) starting with the `root block` and using `.` as the delimiter. Consequently the `.` character MUST not be used inside individual object roles.
 
-It is RECOMMENDED for Device model objects roles to use `Unreserved Characters` as described in [RFC 3986 - 2.3. Unreserved Characters](https://www.ietf.org/rfc/rfc3986.txt). When `Reserved Characters` are used in an object role, they MUST be URL encoded when included in the `rolePaths` endpoint and subsequently in a URL.
+It is RECOMMENDED for device model objects roles to use `Unreserved Characters` as described in [RFC 3986 - 2.3. Unreserved Characters](https://www.ietf.org/rfc/rfc3986.txt). When `Reserved Characters` are used in an object role, they MUST be URL encoded when included in the `rolePaths` endpoint and subsequently in a URL.
 
 Device model object roles are case sensitive and thus any `rolePaths` and URLs which include them are also case sensitive as described in [RFC 7230](https://datatracker.ietf.org/doc/html/rfc7230#section-2.7.3).
 
@@ -83,6 +83,12 @@ The URL MUST target a specific role path in the device model. Devices treat this
 
 This is equivalent to invoking the `GetPropertiesByPath` method on the [Bulk properties manager object](https://specs.amwa.tv/nmos-control-feature-sets/branches/publish-device-configuration/device-configuration/#ncbulkpropertiesmanager).
 
+Retrieving properties through the `bulkProperties` endpoint allows a user to perform a `full backup` or a `partial backup`.
+
+A `full backup` is a [backup data set](Backup%20&%20restore.md#definitions) returned by a `GET` operation on the `/bulkProperties` endpoint of the root block with the `recurse` parameter set to true.
+
+A `partial backup` is a [backup data set](Backup%20&%20restore.md#definitions) returned by a `GET` operation on the `/bulkProperties` endpoint of any object of the device model, other than the root block. A partial backup can also be obtained by a `GET` operation on the `/bulkProperties` endpoint of the root block with the `recurse` query parameter set to false; however this will only result in a backup of the root block only.
+
 ## PUT
 
 ### Changing a property
@@ -131,6 +137,12 @@ For a full schema of the required body object see the [bulkProperties-set-reques
 The response MUST be of type [NcMethodResultObjectPropertiesSetValidation](https://specs.amwa.tv/nmos-control-feature-sets/branches/publish-device-configuration/device-configuration/#ncmethodresultobjectpropertiessetvalidation). If the request encountered an error then the response result returned MUST inherit from [NcMethodResultError](https://specs.amwa.tv/ms-05-02/latest/docs/Framework.html#ncmethodresulterror) and include an errorMessage of type [NcString](https://specs.amwa.tv/ms-05-02/latest/docs/Framework.html#primitives).
 
 This is equivalent to invoking the `SetPropertiesByPath` method inside the [Bulk properties manager object](https://specs.amwa.tv/nmos-control-feature-sets/branches/publish-device-configuration/device-configuration/#ncbulkpropertiesmanager).
+
+Setting properties through the `bulkProperties` endpoint allows a user to perform a `full restore`, a `partial restore` or a `selective restore`.
+
+A `complete restore` is when a [backup data set](Backup%20&%20restore.md#definitions) from a `full backup` is applied as a `PUT` to the `/bulkProperties` endpoint of the root block with the `recurse` argument set to true, and all the properties of all role paths in the data set are applied successfully (their returned validation status is `Ok`). A `complete restore` can also be achieved when a `partial backup` is applied and all the properties of all role paths in the data set are applied successfully (their returned validation status is `Ok`). If any of the properties return a validation status other than `Ok` then that is called an [incomplete restore](Backup%20&%20restore.md#definitions).
+
+A `selectice restore` is when a [backup data set](Backup%20&%20restore.md#definitions) from a `full backup` or `partial backup` is applied as a `PUT` to the `/bulkProperties` endpoint of a role path which is not the root block. A selective restore can also be achieved by a `PUT` operation to the `/bulkProperties` endpoint of the root block with the `recurse` query parameter set to false which will result in restoring the properties of the root block only.
 
 ## PATCH
 

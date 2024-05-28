@@ -16,6 +16,38 @@ These mechanisms are used for enabling backup and restore functionality and this
 
 `Note`: This does not mean that the backup & restore functionality can only be used in these scenarios.
 
+## Definitions
+
+A `device`, for the purposes of this section, is a physical or logical entity that can be backed up and restored using the procedures described. It may or may not correspond to an IS-04 Device or IS-04 Node.
+
+`Backup data set` is the set of data retrieved from a device using the backup procedures described. This is represented as an [NcBulkValuesHolder](https://specs.amwa.tv/nmos-control-feature-sets/branches/publish-device-configuration/device-configuration/#ncbulkvaluesholder) object.
+
+`Device revision` represents any combination of software versions (this includes firmware) and hardware revision that dictates the functionality of the device. As a vendor evolves a product through its lifecycle the hardware, software and/or firmware that make up a device is likely to change. From time to time customers install new software or firmware issued by the vendor that changes how a device behaves. Changes to a device's hardware, such a peripherals or plug-in cards added or removed, could also change its behaviour. Each of these changes can affect how easily a `backup data set` is restored to a device. The `device revision` is used to represent the ensemble of the versions of all the various components that affect a device’s functionality. It is up to a vendor to decide what changes to a device represent a change of `device revision`. A software upgrade will likely result in a device being considered to have a different `device revision` but a vendor could decide that a change in, for example, PCB colour does not represent a different `device revision`.
+
+`Backup validation fingerprint` is an optional string in a `backup data set` that can be used to capture the various versions of the hardware, software and/or firmware that made up a device at the time the backup was performed. The `backup validation fingerprint` can be used by a device to help decide whether the `backup data set` being restored to it is compatible. The format of the string is defined by the vendor and is opaque to other systems. This could contain information such as:
+
+- Manufacturer key
+- Product key
+- Software versions
+- Hardware revisions
+- Backup response hash
+- Timestamp
+- Whether its a full device model backup or a subset
+
+A `compatible revision` is a change of `device revision` such that all of the `backup data set` taken before the revision can be successfully validated by the modified device. If the `backup data set` can not be successfully validated it is said to be an `incompatible revision`.
+
+A `device model` in the context of this specification refers to all the objects and their properties which are exposed in the configuration API.
+
+A `full backup` is a `backup data set` that includes all properties for all role paths of a device model. This is achieved by using the [/bulkProperties endpoint](https://specs.amwa.tv/is-14/branches/v1.0-dev/docs/API_requests.html#getting-all-the-properties-of-a-role-path).
+
+A `partial backup` is a `backup data set` that includes only a subset of role paths of a device model. This is achieved by using the [/bulkProperties endpoint](https://specs.amwa.tv/is-14/branches/v1.0-dev/docs/API_requests.html#getting-all-the-properties-of-a-role-path).
+
+A `complete restore` is when all properties for all role paths in a `full backup` or `partial backup` are successfully applied to a `device`. This is achieved by using the [/bulkProperties endpoint](https://specs.amwa.tv/is-14/branches/v1.0-dev/docs/API_requests.html#setting-bulk-properties-for-a-role-path).
+
+An `incomplete restore` is when some properties of a `full backup` or `partial backup` are not successfully applied to a `device`. This might occur when a `backup data set` is restored to an `incompatible revision`. This is achieved by using the [/bulkProperties endpoint](https://specs.amwa.tv/is-14/branches/v1.0-dev/docs/API_requests.html#setting-bulk-properties-for-a-role-path).
+
+A `selective restore` can be used to apply only selected parts of a `backup set` to a device. This is achieved by using the [/bulkProperties endpoint](https://specs.amwa.tv/is-14/branches/v1.0-dev/docs/API_requests.html#setting-bulk-properties-for-a-role-path).
+
 ## 1. Performing a backup
 
 Creating a backup is performed by using the `bulkProperties` endpoint of a device alongside the [Get verb](https://specs.amwa.tv/is-14/branches/v1.0-dev/docs/API_requests.html#getting-all-the-properties-of-a-role-path).
@@ -86,23 +118,3 @@ Restoring follows a similar [workflow](#2-restoring-on-a-device-with-a-compatibl
 Devices MUST allow the partial restoration of backups which have at least one role path `status` of `Ok` when supplying the `allowPartial` argument of `true` in the request.
 
 // TBD: Facilities can have a multitude of instances of the same device type. Backups performed on a device instance can be used to bootstrap other instances of the same device type. What if the new device overwrites things like IP addresses? Are we saying the restore should be used as a bootstrap mechanism (do we need a isTemplate boolean flag when restoring)?
-
-## Definitions
-
-A `device`, for the purposes of this section, is a physical or logical entity that can be backed up and restored using the procedures described. It is not necessarily the same entity as an IS-04 Device or IS-04 Node, but it can be.
-
-`Backup data set` is the set of data retrieved from a device using the backup procedures described.
-
-`Device revision` represents any combination of software versions (this includes firmware) and hardware revision that dictates the functionality of the device. As a vendor evolves a product through its lifecycle the hardware, software and/or firmware that make up a device is likely to change. From time to time customers install new software or firmware issued by the vendor that changes how a device behaves. Changes to a device's hardware, such a peripherals or plug-in cards added or removed, could also change its behaviour. Each of these changes can affect how easily a `backup data set` is restored to a device. The `device revision` is used to represent the ensemble of the versions of all the various components that affect a device’s functionality. It is up to a vendor to decide what changes to a device represent a change of `device revision`. A software upgrade will likely result in a device being considered to have a different `device revision` but a vendor could decide that a change in, for example, PCB colour does not represent a different `device revision`.
-
-`Backup validation fingerprint` is an optional string in a `backup data set` that can be used to capture the various versions of the hardware, software and/or firmware that made up a device at the time the backup was performed. The `backup validation fingerprint` can be used by a device to help decide whether the `backup data set` being restored to it is compatible. The format of the string is defined by the vendor and is opaque to other systems. This could contain information such as:
-
-- Manufacturer key
-- Product key
-- Software versions
-- Hardware revisions
-- Backup response hash
-- Timestamp
-- Whether its a full device model backup or a subset
-
-A `compatible revision` is a change of `device revision` such that all of the `backup data set` taken before the revision can be successfully validated by the modified device. If the `backup data set` can not be successfully validated it is said to be an `incompatible revision`.
