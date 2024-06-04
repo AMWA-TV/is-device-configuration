@@ -42,11 +42,13 @@ A `full backup` is a `backup data set` that includes all properties for all role
 
 A `partial backup` is a `backup data set` that includes only a subset of role paths of a device model. This is achieved by using the [/bulkProperties endpoint](https://specs.amwa.tv/is-14/branches/v1.0-dev/docs/API_requests.html#getting-all-the-properties-of-a-role-path).
 
+A `modified backup` is a `full backup` or `partial backup` where the backup data set has been modified by a client. Examples of modified backups include: updating values of existing backup data set properties, adding/removing device model role paths from the backup data set.
+
 A `complete restore` occurs when all properties for all role paths in a `full backup` or `partial backup` are successfully applied to a `device`. This is achieved by using the [/bulkProperties endpoint](https://specs.amwa.tv/is-14/branches/v1.0-dev/docs/API_requests.html#setting-bulk-properties-for-a-role-path).
 
 An `incomplete restore` occurs when some properties of a `full backup` or `partial backup` are not successfully applied to a `device`. This might occur when a `backup data set` is restored to an `incompatible revision`. This is achieved by using the [/bulkProperties endpoint](https://specs.amwa.tv/is-14/branches/v1.0-dev/docs/API_requests.html#setting-bulk-properties-for-a-role-path).
 
-A `selective restore` is a type of restore in which a `backup data set` is applied to a device. This is achieved by using the [/bulkProperties endpoint](https://specs.amwa.tv/is-14/branches/v1.0-dev/docs/API_requests.html#setting-bulk-properties-for-a-role-path).
+A `selective restore` is a restore in which a subset from a `backup data set` is applied to a device. This is achieved by using the [/bulkProperties endpoint](https://specs.amwa.tv/is-14/branches/v1.0-dev/docs/API_requests.html#setting-bulk-properties-for-a-role-path).
 
 ## 1. Performing a backup
 
@@ -97,15 +99,13 @@ The response MUST include a collection of all target device model role paths wit
 
 Devices MUST allow fully restoring backups created from a `compatible revision`.
 
-Devices MUST allow the partial restoration of backups which have at least one role path `status` of `Ok` when supplying the `allowPartial` argument of `true` in the request.
+Devices MUST allow an `incomplete restore` of backups when the validation response has at least one role path `status` of `Ok` when supplying the `allowPartial` argument of `true` in the request.
 
-Devices MUST allow restoration of modified backups (full or partial backups where the data sets have been modified by a controller or provisioning tool) which have at least one role path `status` of `Ok` when supplying the `allowPartial` argument of `true` in the request.
+Devices MUST allow a `complete restore` of `modified backups` when all the role paths have an `Ok` status in the validation response.
 
-// TBD: Do we need to further define what a modified backup is?
+Devices MUST allow an `incomplete restore` of `modified backups` when the validation response has at least one role path `status` of `Ok` when supplying the `allowPartial` argument of `true` in the request.
 
-// TBD: Do we think some devices may need to be put in maintenance mode for restore to work?
-
-// TBD: Do we think some devices may need to reboot in order to apply a restore?
+If devices require a system reboot in order to apply a `complete restore` or an `incomplete restore` then they MUST perform this immediately after responding to the restore request.
 
 ## 3. Restoring on a device with an incompatible revision
 
