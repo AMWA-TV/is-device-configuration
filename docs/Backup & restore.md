@@ -89,7 +89,7 @@ The request body MUST include:
 
 - the backup dataSet
 - a boolean `recurse` argument (set to `true` for validating the whole device model)
-- a boolean `allowPartial` argument. This allows clients to control if the device should still perform a partial restore when some role paths fail validation (only the role paths which have been validated successfully are restored)
+- a boolean `allowIncomplete` argument. This allows clients to control if the device should perform an incomplete restore when some role paths fail validation (only the role paths which have been validated successfully are restored)
 
 | ![Restoring a full backup](images/restoring-full-backup.png) |
 |:--:|
@@ -99,11 +99,11 @@ The response MUST include a collection of all target device model role paths wit
 
 Devices MUST allow fully restoring backups created from a `compatible revision`.
 
-Devices MUST allow an `incomplete restore` of backups when the validation response has at least one role path `status` of `Ok` when supplying the `allowPartial` argument of `true` in the request.
+Devices MUST allow an `incomplete restore` of backups when the validation response has at least one role path `status` of `Ok` when supplying the `allowIncomplete` argument of `true` in the request.
 
 Devices MUST allow a `complete restore` of `modified backups` when all the role paths have an `Ok` status in the validation response.
 
-Devices MUST allow an `incomplete restore` of `modified backups` when the validation response has at least one role path `status` of `Ok` when supplying the `allowPartial` argument of `true` in the request.
+Devices MUST allow an `incomplete restore` of `modified backups` when the validation response has at least one role path `status` of `Ok` when supplying the `allowIncomplete` argument of `true` in the request.
 
 If devices require a system reboot in order to apply a `complete restore` or an `incomplete restore` then they MUST perform this immediately after responding to the restore request.
 
@@ -115,6 +115,6 @@ Restoring follows a similar [workflow](#2-restoring-on-a-device-with-a-compatibl
 |:--:|
 | _**Restoring on a different device revision**_ |
 
-Devices MUST allow the partial restoration of backups which have at least one role path `status` of `Ok` when supplying the `allowPartial` argument of `true` in the request.
+Devices MUST allow an `incomplete restore` of backups when the validation response has at least one role path `status` of `Ok` when supplying the `allowIncomplete` argument of `true` in the request.
 
 // TBD: Facilities can have a multitude of instances of the same device type. Backups performed on a device instance can be used to bootstrap other instances of the same device type. What if the new device overwrites things like IP addresses? Are we saying the restore should be used as a bootstrap mechanism (do we need a isTemplate boolean flag when restoring)?

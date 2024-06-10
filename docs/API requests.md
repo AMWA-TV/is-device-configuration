@@ -125,7 +125,7 @@ The body of the request MUST include an object which includes an `arguments` obj
             ...
         },
         "recurse": true,
-        "allowPartial": true
+        "allowIncomplete": true
     }
 }
 ```
