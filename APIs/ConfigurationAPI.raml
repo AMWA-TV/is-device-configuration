@@ -62,6 +62,11 @@ documentation:
               type: !include schemas/bulkProperties-get-response.json
               example: !include ../examples/bulkProperties-get-200.json
       options:
+        description: A pre-flight check generally used for Cross-Origin Resource Sharing (CORS) purposes
+        responses:
+          200:
+          403:
+      patch:
         description: 'Validate an NcBulkValuesHolder object against the Device Model'
         body:
           type: !include schemas/bulkProperties-validate-request.json
@@ -108,6 +113,11 @@ documentation:
             methodId:
                 type: string
                 pattern: "^[0-9]+m[0-9]+"
+        options:
+          description: A pre-flight check generally used for Cross-Origin Resource Sharing (CORS) purposes
+          responses:
+            200:
+            403:
         patch:
           description: 'Invoke method.'
           body:
@@ -181,6 +191,11 @@ documentation:
                 description: 'Returned when the Property was unable to be retrieved. Corresponds to NcMethodStatus code 500.'
                 body:
                   type: !include schemas/ms05-error.json
+          options:
+            description: A pre-flight check generally used for Cross-Origin Resource Sharing (CORS) purposes
+            responses:
+              200:
+              403:
           put:
             descriptions: 'Put value of a Property'
             body:
