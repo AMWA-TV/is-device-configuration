@@ -79,7 +79,7 @@ The request body MUST include:
 |:--:|
 | _**Validating a full backup**_ |
 
-The response MUST include a collection of all target device model role paths with a validation `status` property. For role paths which have a `status` other than `Ok` the response MUST also include a `statusMessage` with details of why the validation failed.
+The response MUST include a collection of all target device model role paths with a validation `status` property and an `exceptions` array of property exceptions. For role paths which have a `status` which is not a 2XX value the response MUST also include a `statusMessage` with details of why the validation failed. Role paths which have a `status` of 206 (PartiallyOk) MUST also include a non empty `exceptions` array of property exceptions where all the properties which cannot be restored from the values provided in the dataset MUST be mentioned as well as the underlying reason for this in the `exceptionMessage`.
 
 The backup can be restored by performing a [Set request](https://specs.amwa.tv/is-14/branches/v1.0-dev/docs/API_requests.html#setting-bulk-properties-for-a-role-path) to restore the backup.
 
@@ -95,7 +95,7 @@ The request body MUST include:
 |:--:|
 | _**Restoring a full backup**_ |
 
-The response MUST include a collection of all target device model role paths with a restore `status` property. For role paths which have a `status` other than `Ok` the response MUST also include a `statusMessage` with details of why the restore failed.
+The response MUST include a collection of all target device model role paths with a validation `status` property and an `exceptions` array of property exceptions. For role paths which have a `status` which is not a 2XX value the response MUST also include a `statusMessage` with details of why the restore failed. Role paths which have a `status` of 206 (PartiallyOk) MUST also include a non empty `exceptions` array of property exceptions where all the properties which cannot be restored from the values provided in the dataset MUST be mentioned as well as the underlying reason for this in the `exceptionMessage`.
 
 Devices MUST allow fully restoring backups created from a `compatible revision`.
 
