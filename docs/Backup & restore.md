@@ -1,6 +1,6 @@
 # Backup & restore
 
-Supporting backup & restore is a key feature of IS-14. In addition to supporting full back and full restore to the same device, IS-14 enables partial backup and partial restore to the same device or a different device. To discuss the various possible combinations of backup and restore, this section utilizes terms explained in the [Definitions](#definitions) section.
+Supporting backup & restore is a key feature of IS-14. To discuss the various possible combinations of backup and restore, this section utilizes terms explained in the [Definitions](#definitions) section.
 
 The [Configuration API](https://specs.amwa.tv/is-14/branches/v1.0-dev/APIs/ConfigurationAPI.html) defines a `bulkProperties` endpoint which allows:
 
@@ -11,8 +11,7 @@ The [Configuration API](https://specs.amwa.tv/is-14/branches/v1.0-dev/APIs/Confi
 These mechanisms are used for enabling backup and restore functionality and this section of the specification aims to cover the expectations, behaviour and requirements for the following scenarios:
 
 - [Performing a backup](#1-performing-a-backup)
-- Restoring on a [device with a compatible revision](#2-restoring-on-a-device-with-a-compatible-revision)
-- Restoring on a [device with an incompatible revision](#3-restoring-on-a-device-with-an-incompatible-revision)
+- Restoring a full backup data set to a device which is a [spare device replacing a faulty unit](#2-restoring-a-full-backup-data-set-to-a-device-which-is-a-spare-device-replacing-a-faulty-unit)
 
 `Note`: This does not mean that the backup & restore functionality can only be used in these scenarios.
 
@@ -21,8 +20,6 @@ These mechanisms are used for enabling backup and restore functionality and this
 A `device`, for the purposes of this section, is a physical or logical entity that can be backed up and restored using the procedures described. It may or may not correspond to an IS-04 Device or IS-04 Node.
 
 `Backup data set` is the set of data retrieved from a device using the backup procedures described. This is represented as an [NcBulkValuesHolder](https://specs.amwa.tv/nmos-control-feature-sets/branches/publish-device-configuration/device-configuration/#ncbulkvaluesholder) object.
-
-`Device revision` represents any combination of software versions (this includes firmware) and hardware revision that dictates the functionality of the device. As a vendor evolves a product through its lifecycle the hardware, software and/or firmware that make up a device is likely to change. From time to time customers install new software or firmware issued by the vendor that changes how a device behaves. Changes to a device's hardware, such a peripherals or plug-in cards added or removed, could also change its behaviour. Each of these changes can affect how easily a `backup data set` is restored to a device. The `device revision` is used to represent the ensemble of the versions of all the various components that affect a device’s functionality. It is up to a vendor to decide what changes to a device represent a change of `device revision`. A software upgrade will likely result in a device being considered to have a different `device revision` but a vendor could decide that a change in, for example, PCB colour does not represent a different `device revision`.
 
 `Backup validation fingerprint` is an optional string in a `backup data set` that can be used to capture the various versions of the hardware, software and/or firmware that made up a device at the time the backup was performed. The `backup validation fingerprint` can be used by a device to help decide whether the `backup data set` being restored to it is compatible. The format of the string is defined by the vendor and is opaque to other systems. This could contain information such as:
 
@@ -34,8 +31,6 @@ A `device`, for the purposes of this section, is a physical or logical entity th
 - Timestamp
 - Whether its a full device model backup or a subset
 
-A `compatible revision` is a change of `device revision` such that all of the `backup data set` taken before the revision can be successfully validated by the modified device. If the `backup data set` can not be successfully validated it is said to be an `incompatible revision`.
-
 A `device model` in the context of this specification refers to all the objects and their properties which are exposed in the configuration API.
 
 A `full backup` is a `backup data set` that includes all properties for all role paths of a device model. This is achieved by using the [/bulkProperties endpoint](https://specs.amwa.tv/is-14/branches/v1.0-dev/docs/API_requests.html#getting-all-the-properties-of-a-role-path).
@@ -44,11 +39,24 @@ A `partial backup` is a `backup data set` that includes only a subset of role pa
 
 A `modified backup` is a `full backup` or `partial backup` where the backup data set has been modified by a client. Examples of modified backups include: updating values of existing backup data set properties, adding/removing device model role paths from the backup data set.
 
-A `complete restore` occurs when all properties for all role paths in a `full backup` or `partial backup` are successfully applied to a `device`. This is achieved by using the [/bulkProperties endpoint](https://specs.amwa.tv/is-14/branches/v1.0-dev/docs/API_requests.html#setting-bulk-properties-for-a-role-path).
+## General concepts
 
-An `incomplete restore` occurs when some properties of a `full backup` or `partial backup` are not successfully applied to a `device`. This might occur when a `backup data set` is restored to an `incompatible revision`. This is achieved by using the [/bulkProperties endpoint](https://specs.amwa.tv/is-14/branches/v1.0-dev/docs/API_requests.html#setting-bulk-properties-for-a-role-path).
+The restore mechanism achieved by [Setting bulk properties for a role path](https://specs.amwa.tv/is-14/branches/v1.0-dev/docs/API_requests.html#setting-bulk-properties-for-a-role-path) affects the device model by either:
 
-A `selective restore` is a restore in which a subset from a `backup data set` is applied to a device. This is achieved by using the [/bulkProperties endpoint](https://specs.amwa.tv/is-14/branches/v1.0-dev/docs/API_requests.html#setting-bulk-properties-for-a-role-path).
+- changing properties of existing objects
+- constructing new objects for blocks which require new members (structural changes)
+- deconstructing existing objects for blocks which need to have fewer members (structural changes)
+- reconstructing existing object (some devices might need to create an object again in order to apply properties which can only be changed at object construction). Reconstructed objects might have a different oid but MUST maintain their role within their parent block.
+
+The general pattern for how devices interpret the restore workflow can be explained as follows:
+
+- devices MUST always offer healthy objects in the device model after a restore
+- devices MUST attempt to use the backup data set provided first as a pool of information for changing/constructing/deconstructing/reconstructing a particular role path object and if they have all the necessary data they MUST report the restore status as `Ok`
+- if the backup data set provided doesn't have the information required for changing/constructing/deconstructing/reconstructing a particular role path object, but the device can fill in the necessary gaps from an internal knowledge store, then they MUST report the restore status as `PartiallyOk` and include properties which have benefited from internal knowledge store data in the `exceptionList` property.
+- if devices cannot find the required information for changing/constructing/deconstructing/reconstructing a particular role path object in either the backup data set provided or an internal knowledge store then they MUST return `InvalidData`
+
+Properties of a role path object within a backup data set will have specific traits described as [NcPropertyTrait](https://specs.amwa.tv/nmos-control-feature-sets/branches/publish-device-configuration/device-configuration/#ncpropertytrait).
+These traits are offered so that clients attempting to not restore all properties can use them to filter and only include in the restore workflow specific property traits. One example scenario is when a backup data set of a device is used to restore the state of existing device model objects but prevent any structural changes (creation or destruction of block members). To achieve this a client would exclude the `Structural` trait from the `propertyTraits` argument when [Setting bulk properties for a role path](https://specs.amwa.tv/is-14/branches/v1.0-dev/docs/API_requests.html#setting-bulk-properties-for-a-role-path).
 
 ## 1. Performing a backup
 
@@ -64,16 +72,21 @@ Partial backups can be created by choosing other role paths. The scope of backup
 
 It is RECOMMENDED to store the backup file in its entirety and not remove elements from the data set as they might contain dependencies required by some of the role paths.
 
-## 2. Restoring on a device with a compatible revision
+## 2. Restoring a full backup data set to a device which is a spare device replacing a faulty unit
 
-Assuming a [full backup](#1-performing-a-backup) of the device was created and is intended to be restored on a device with a compatible revision then the first step is to perform a [Validation request](https://specs.amwa.tv/is-14/branches/v1.0-dev/docs/API_requests.html#validating-bulk-properties-for-a-role-path) to check if the backup can be successfully restored.
+There is an assumption that the spare device replacing the faulty unit is the same product type from the same vendor.
 
-In order to validate the whole device model (validating a full backup), requests MUST use `root` as the `rolePath`.
+There is also an assumption that a [full backup](#1-performing-a-backup) has been created of the faulty unit when it was healthy.
+
+The first step is to perform a [Validation request](https://specs.amwa.tv/is-14/branches/v1.0-dev/docs/API_requests.html#validating-bulk-properties-for-a-role-path) to check if the backup data set can be successfully restored.
+
+In order to validate applying the whole backup data set against the device model, requests MUST use `root` as the `rolePath`.
 
 The request body MUST include:
 
 - the backup dataSet
 - a boolean `recurse` argument (set to `true` for validating the whole device model)
+- a `propertyTraits` argument (set to `null` for including all properties regardless of their traits)
 
 | ![Validating a full backup](images/validating-full-backup.png) |
 |:--:|
@@ -83,13 +96,13 @@ The response MUST include a collection of all target device model role paths wit
 
 The backup can be restored by performing a [Set request](https://specs.amwa.tv/is-14/branches/v1.0-dev/docs/API_requests.html#setting-bulk-properties-for-a-role-path) to restore the backup.
 
-In order to restore the whole device model (restoring a full backup), requests MUST use `root` as the `rolePath`.
+In order to use the whole backup data set to restore against the device model, requests MUST use `root` as the `rolePath`.
 
 The request body MUST include:
 
 - the backup dataSet
 - a boolean `recurse` argument (set to `true` for validating the whole device model)
-- a boolean `allowIncomplete` argument. This allows clients to control if the device should perform an incomplete restore when some role paths fail validation (only the role paths which have been validated successfully are restored)
+- a `propertyTraits` argument (set to `null` for including all properties regardless of their traits)
 
 | ![Restoring a full backup](images/restoring-full-backup.png) |
 |:--:|
@@ -97,24 +110,4 @@ The request body MUST include:
 
 The response MUST include a collection of all target device model role paths with a validation `status` property and an `exceptions` array of property exceptions. For role paths which have a `status` which is not a 2XX value the response MUST also include a `statusMessage` with details of why the restore failed. Role paths which have a `status` of 206 (PartiallyOk) MUST also include a non empty `exceptions` array of property exceptions where all the properties which cannot be restored from the values provided in the dataset MUST be mentioned as well as the underlying reason for this in the `exceptionMessage`.
 
-Devices MUST allow fully restoring backups created from a `compatible revision`.
-
-Devices MUST allow an `incomplete restore` of backups when the validation response has at least one role path `status` of `Ok` when supplying the `allowIncomplete` argument of `true` in the request.
-
-Devices MUST allow a `complete restore` of `modified backups` when all the role paths have an `Ok` status in the validation response.
-
-Devices MUST allow an `incomplete restore` of `modified backups` when the validation response has at least one role path `status` of `Ok` when supplying the `allowIncomplete` argument of `true` in the request.
-
-If devices require a system reboot in order to apply a `complete restore` or an `incomplete restore` then they MUST perform this immediately after responding to the restore request.
-
-## 3. Restoring on a device with an incompatible revision
-
-Restoring follows a similar [workflow](#2-restoring-on-a-device-with-a-compatible-revision) with the difference that the restore device does not have a compatible revision.
-
-| ![Restoring on a different device revision](images/restoring-same-dev-different-dev-rev.png) |
-|:--:|
-| _**Restoring on a different device revision**_ |
-
-Devices MUST allow an `incomplete restore` of backups when the validation response has at least one role path `status` of `Ok` when supplying the `allowIncomplete` argument of `true` in the request.
-
-// TBD: Facilities can have a multitude of instances of the same device type. Backups performed on a device instance can be used to bootstrap other instances of the same device type. What if the new device overwrites things like IP addresses? Are we saying the restore should be used as a bootstrap mechanism (do we need a isTemplate boolean flag when restoring)?
+If devices require a system reboot in order to apply the restore then they MUST perform this immediately after responding to the restore request.
