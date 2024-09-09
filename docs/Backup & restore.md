@@ -21,7 +21,7 @@ A `device`, for the purposes of this section, is a physical or logical entity th
 
 `Backup data set` is the set of data retrieved from a device using the backup procedures described. This is represented as an [NcBulkValuesHolder](https://specs.amwa.tv/nmos-control-feature-sets/branches/publish-device-configuration/device-configuration/#ncbulkvaluesholder) object.
 
-`Backup validation fingerprint` is an optional string in a `backup data set` that can be used to capture the various versions of the hardware, software and/or firmware that made up a device at the time the backup was performed. The `backup validation fingerprint` can be used by a device to help decide whether the `backup data set` being restored to it is compatible. The format of the string is defined by the vendor and is opaque to other systems. This could contain information such as:
+`Backup validation fingerprint` is an optional string in a `backup data set` that can be used to capture the various versions of the hardware, software and/or firmware that made up a device at the time the backup was performed. The format of the string is defined by the vendor and is opaque to other systems. This could contain information such as:
 
 - Manufacturer key
 - Product key
@@ -29,7 +29,7 @@ A `device`, for the purposes of this section, is a physical or logical entity th
 - Hardware revisions
 - Backup response hash
 - Timestamp
-- Whether its a full device model backup or a subset
+- Whether its a full device model backup or a partial backup
 
 A `device model` in the context of this specification refers to all the objects and their properties which are exposed in the configuration API.
 
