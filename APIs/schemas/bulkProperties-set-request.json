@@ -18,8 +18,9 @@
         "recurse": {
           "type": "boolean"
         },
-        "allowIncomplete": {
-          "type": "boolean"
+        "propertyTraits": {
+          "type": [ "array", "null" ],
+          "description": "Array of NcPropertyTrait items"
         }
       }
     }
