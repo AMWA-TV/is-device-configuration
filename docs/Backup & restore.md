@@ -51,9 +51,9 @@ The restore mechanism achieved by [Setting bulk properties for a role path](http
 The general pattern for how devices interpret the restore workflow can be explained as follows:
 
 - devices MUST always offer healthy objects in the device model after a restore
-- devices MUST attempt to use the backup data set provided first as a pool of information for changing/constructing/deconstructing/reconstructing a particular role path object and if they have all the necessary data they MUST report the restore status as `Ok`
-- if the backup data set provided doesn't have the information required for changing/constructing/deconstructing/reconstructing a particular role path object, but the device can fill in the necessary gaps from an internal knowledge store, then they MUST report the restore status as `PartiallyOk` and include properties which have benefited from internal knowledge store data in the `exceptionList` property.
-- if devices cannot find the required information for changing/constructing/deconstructing/reconstructing a particular role path object in either the backup data set provided or an internal knowledge store then they MUST return `InvalidData`
+- devices MUST attempt to use the backup data set provided first as a pool of information for changing/constructing/deconstructing/reconstructing a particular role path object and if they have all the necessary data they MUST report the restore status as `Ok`.
+- if the backup data set provided doesn't have the information required for changing/constructing/deconstructing/reconstructing a particular role path object, but the device can fill in the necessary gaps from an internal knowledge store, then they MUST report the restore status as `Ok` and include properties which have benefited from internal knowledge store data in the [notices](https://specs.amwa.tv/nmos-control-feature-sets/branches/publish-device-configuration/device-configuration/#ncpropertyrestorenotice) property as `Warning` notices.
+- if devices cannot find the required information for changing/constructing/deconstructing/reconstructing a particular role path object in either the backup data set provided or an internal knowledge store then they MUST return `Failed` as the restore status.
 
 Properties of a role path object within a backup data set will have specific traits described as [NcPropertyTrait](https://specs.amwa.tv/nmos-control-feature-sets/branches/publish-device-configuration/device-configuration/#ncpropertytrait).
 These traits are offered so that clients attempting to not restore all properties can use them to filter and only include in the restore workflow specific property traits. One example scenario is when a backup data set of a device is used to restore the state of existing device model objects but prevent any structural changes (creation or destruction of block members). To achieve this a client would exclude the `Structural` trait from the `propertyTraits` argument when [Setting bulk properties for a role path](https://specs.amwa.tv/is-14/branches/v1.0-dev/docs/API_requests.html#setting-bulk-properties-for-a-role-path).
@@ -92,7 +92,7 @@ The request body MUST include:
 |:--:|
 | _**Validating a full backup**_ |
 
-The response MUST include a collection of all target device model role paths with a validation `status` property and an `exceptions` array of property exceptions. For role paths which have a `status` which is not a 2XX value the response MUST also include a `statusMessage` with details of why the validation failed. Role paths which have a `status` of 206 (PartiallyOk) MUST also include a non empty `exceptions` array of property exceptions where all the properties which cannot be restored from the values provided in the dataset MUST be mentioned as well as the underlying reason for this in the `exceptionMessage`.
+The response MUST include a collection of all target device model role paths with a validation `status` property and a `notices` array of property notices. For role paths which have a `status` which is not a 2XX value the response MUST also include a `statusMessage` with details of why the validation failed. When there are properties of role path objects which cannot be validated from the values provided in the dataset, these MUST be reported in the `notices` property as `Warning` notices.
 
 The backup can be restored by performing a [Set request](https://specs.amwa.tv/is-14/branches/v1.0-dev/docs/API_requests.html#setting-bulk-properties-for-a-role-path) to restore the backup.
 
@@ -108,6 +108,6 @@ The request body MUST include:
 |:--:|
 | _**Restoring a full backup**_ |
 
-The response MUST include a collection of all target device model role paths with a validation `status` property and an `exceptions` array of property exceptions. For role paths which have a `status` which is not a 2XX value the response MUST also include a `statusMessage` with details of why the restore failed. Role paths which have a `status` of 206 (PartiallyOk) MUST also include a non empty `exceptions` array of property exceptions where all the properties which cannot be restored from the values provided in the dataset MUST be mentioned as well as the underlying reason for this in the `exceptionMessage`.
+The response MUST include a collection of all target device model role paths with a validation `status` property and a `notices` array of property notices. For role paths which have a `status` which is not a 2XX value the response MUST also include a `statusMessage` with details of why the restore failed. When there are properties of role path objects which cannot be restored from the values provided in the dataset, these MUST be reported in the `notices` property as `Warning` notices.
 
 If devices require a system reboot in order to apply the restore then they MUST perform this immediately after responding to the restore request.
