@@ -11,8 +11,8 @@ The [Configuration API](https://specs.amwa.tv/is-14/branches/v1.0-dev/APIs/Confi
 These mechanisms are used for enabling backup and restore functionality and this section of the specification aims to cover the expectations, behaviour and requirements for the following scenarios:
 
 - [Performing a backup](#performing-a-backup)
-- Restoring a full backup data set to a [fixed device after a faulty unit is replaced with an identical spare](#restoring-a-full-backup-data-set-to-a-fixed-device-after-a-faulty-unit-is-replaced-with-an-identical-spare)
 - Restoring a full backup data set to a [dynamic device after a faulty unit is replaced with an identical spare](#restoring-a-full-backup-data-set-to-a-dynamic-device-after-a-faulty-unit-is-replaced-with-an-identical-spare)
+- Restoring a full backup data set to a [fixed device after a faulty unit is replaced with an identical spare](#restoring-a-full-backup-data-set-to-a-fixed-device-after-a-faulty-unit-is-replaced-with-an-identical-spare)
 
 `Note`: This does not mean that the backup & restore functionality can only be used in these scenarios.
 
@@ -77,54 +77,6 @@ Partial backups can be created by choosing other role paths. The scope of backup
 
 It is RECOMMENDED to store the backup file in its entirety and not remove elements from the data set as they might contain dependencies required by some of the role paths.
 
-## Restoring a full backup data set to a fixed device after a faulty unit is replaced with an identical spare
-
-The following assumptions are made:
-
-- the spare device replacing the faulty unit is the same product type from the same vendor
-- a [full backup](#performing-a-backup) has been created of the faulty unit when it was healthy
-- the devices are fixed containing no rebuildable blocks or objects
-
-The first step is to perform a [Validation request](https://specs.amwa.tv/is-14/branches/v1.0-dev/docs/API_requests.html#validating-bulk-properties-for-a-role-path) to check if the backup data set can be successfully restored.
-
-In order to validate applying the whole backup data set against the device model, requests MUST use `root` as the `rolePath`.
-
-The request body MUST include:
-
-- the backup dataSet
-- a boolean `recurse` argument (set to `true` for validating the whole device model)
-- the `restoreMode` argument (set to `Modify` in order to only allow changes to writeable properties)
-
-| ![Validating a full backup](images/validating-full-backup.png) |
-|:--:|
-| _**Validating a full backup**_ |
-
-The response MUST include a collection of all target device model role paths with a validation `status` property and a `notices` array of property notices. For role paths which have a `status` which is not a 2XX value the response MUST also include a `statusMessage` with details of why the validation failed. When there are properties of role path objects which cannot be validated from the values provided in the dataset, these MUST be reported in the `notices` property as `Warning` notices.
-
-The backup can be restored by performing a [Set request](https://specs.amwa.tv/is-14/branches/v1.0-dev/docs/API_requests.html#setting-bulk-properties-for-a-role-path) to restore the backup.
-
-In order to use the whole backup data set to restore against the device model, requests MUST use `root` as the `rolePath`.
-
-The request body MUST include:
-
-- the backup dataSet
-- a boolean `recurse` argument (set to `true` for validating the whole device model)
-- the `restoreMode` argument (set to `Modify` in order to only allow changes to writeable properties)
-
-| ![Restoring a full backup](images/restoring-full-backup.png) |
-|:--:|
-| _**Restoring a full backup**_ |
-
-The response MUST include a collection of all target device model role paths with a validation `status` property and a `notices` array of property notices. For role paths which have a `status` which is not a 2XX value the response MUST also include a `statusMessage` with details of why the restore failed. When there are properties of role path objects which cannot be restored from the values provided in the dataset, these MUST be reported in the `notices` property as `Warning` notices.
-
-If devices require a system reboot in order to apply the restore then they MUST perform this immediately after responding to the restore request.
-
-The diagram below captures how the `Rebuild` restore uses the backup data set to transition the spare device from its out of the box device model to a state of functionality identical to the original faulty device.
-
-| ![Modify restore of spare](images/restoring_on_fixed_spare.png) |
-|:--:|
-| _**Modify restore of spare**_ |
-
 ## Restoring a full backup data set to a dynamic device after a faulty unit is replaced with an identical spare
 
 The following assumptions are made:
@@ -172,3 +124,43 @@ The diagram below captures how the `Rebuild` restore uses the backup data set to
 | ![Rebuild restore of spare](images/restoring_on_dynamic_spare.png) |
 |:--:|
 | _**Rebuild restore of spare**_ |
+
+## Restoring a full backup data set to a fixed device after a faulty unit is replaced with an identical spare
+
+The following assumptions are made:
+
+- the spare device replacing the faulty unit is the same product type from the same vendor
+- a [full backup](#performing-a-backup) has been created of the faulty unit when it was healthy
+- the devices are fixed containing no rebuildable blocks or objects
+
+The first step is to perform a [Validation request](https://specs.amwa.tv/is-14/branches/v1.0-dev/docs/API_requests.html#validating-bulk-properties-for-a-role-path) to check if the backup data set can be successfully restored.
+
+In order to validate applying the whole backup data set against the device model, requests MUST use `root` as the `rolePath`.
+
+The request body MUST include:
+
+- the backup dataSet
+- a boolean `recurse` argument (set to `true` for validating the whole device model)
+- the `restoreMode` argument (set to `Modify` in order to only allow changes to writeable properties)
+
+The response MUST include a collection of all target device model role paths with a validation `status` property and a `notices` array of property notices. For role paths which have a `status` which is not a 2XX value the response MUST also include a `statusMessage` with details of why the validation failed. When there are properties of role path objects which cannot be validated from the values provided in the dataset, these MUST be reported in the `notices` property as `Warning` notices.
+
+The backup can be restored by performing a [Set request](https://specs.amwa.tv/is-14/branches/v1.0-dev/docs/API_requests.html#setting-bulk-properties-for-a-role-path) to restore the backup.
+
+In order to use the whole backup data set to restore against the device model, requests MUST use `root` as the `rolePath`.
+
+The request body MUST include:
+
+- the backup dataSet
+- a boolean `recurse` argument (set to `true` for validating the whole device model)
+- the `restoreMode` argument (set to `Modify` in order to only allow changes to writeable properties)
+
+The response MUST include a collection of all target device model role paths with a validation `status` property and a `notices` array of property notices. For role paths which have a `status` which is not a 2XX value the response MUST also include a `statusMessage` with details of why the restore failed. When there are properties of role path objects which cannot be restored from the values provided in the dataset, these MUST be reported in the `notices` property as `Warning` notices.
+
+If devices require a system reboot in order to apply the restore then they MUST perform this immediately after responding to the restore request.
+
+The diagram below captures how the `Rebuild` restore uses the backup data set to transition the spare device from its out of the box device model to a state of functionality identical to the original faulty device.
+
+| ![Modify restore of spare](images/restoring_on_fixed_spare.png) |
+|:--:|
+| _**Modify restore of spare**_ |
