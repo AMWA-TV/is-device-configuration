@@ -105,8 +105,6 @@ The body of the request MUST include an object which includes the new value of t
 
 This is equivalent to invoking the generic [Set method](https://specs.amwa.tv/ms-05-02/latest/docs/NcObject.html#generic-getter-and-setter) on the specific object for the required property.
 
-`TBD`: Figure out how we map deprecation statuses for properties and methods.
-
 ### Setting bulk properties for a role path
 
 | ![Setting bulk properties](images/set-bulk-properties.png) |
@@ -116,7 +114,7 @@ This is equivalent to invoking the generic [Set method](https://specs.amwa.tv/ms
 The PUT verb MUST be used for setting a bulk properties data set.
 
 The URL MUST target a specific role path.
-The body of the request MUST include an object which includes an `arguments` object with `dataSet`, `recurse` and `propertyTraits` sub elements.
+The body of the request MUST include an object which includes an `arguments` object with `dataSet`, `recurse` and `restoreMode` sub elements.
 
 ```json
 {
@@ -125,7 +123,7 @@ The body of the request MUST include an object which includes an `arguments` obj
             ...
         },
         "recurse": true,
-        "propertyTraits": null
+        "restoreMode": 1
     }
 }
 ```
@@ -167,8 +165,6 @@ The response MUST be of type [NcMethodResult](https://specs.amwa.tv/ms-05-02/lat
 
 This is equivalent to invoking the specified method.
 
-`TODO`: Figure out how we map deprecation statuses for properties and methods.
-
 ### Validating bulk properties for a role path
 
 | ![Validating bulk properties](images/validate-bulk-properties.png) |
@@ -178,7 +174,7 @@ This is equivalent to invoking the specified method.
 The PATCH verb MUST be used for validating a bulk properties data set.
 
 The URL MUST target a specific role path.
-The body of the request MUST include an object which includes an `arguments` object with `dataSet` and `recurse` sub elements.
+The body of the request MUST include an object which includes an `arguments` object with `dataSet`, `recurse` and `restoreMode` sub elements.
 
 ```json
 {
@@ -187,7 +183,7 @@ The body of the request MUST include an object which includes an `arguments` obj
             ...
         },
         "recurse": true,
-        "propertyTraits": null
+        "restoreMode": 1
     }
 }
 ```
