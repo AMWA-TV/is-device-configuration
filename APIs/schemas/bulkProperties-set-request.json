@@ -17,6 +17,10 @@
         },
         "recurse": {
           "type": "boolean"
+        },
+        "restoreMode": {
+          "type": "integer",
+          "description": "numeric representation of NcRestoreMode enum options"
         }
       }
     }

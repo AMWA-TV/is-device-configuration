@@ -11,6 +11,7 @@
             "index": 6
           },
           "name": "userLabel",
+          "typeName": "NcString",
           "isReadOnly": false,
           "value": "this is the property value"
         },
@@ -20,6 +21,7 @@
             "index": 1
           },
           "name": "enabled",
+          "typeName": "NcBoolean",
           "isReadOnly": false,
           "value": true
         }
