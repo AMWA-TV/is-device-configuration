@@ -34,7 +34,9 @@ documentation:
           example: !include ../examples/rolePaths-base-get-200.json
           type: !include schemas/rolePaths-base.json
   /{rolePath}:
-    displayName: 'Attributes of a Role Path'
+    uriParameters:
+        rolePath:
+            type: string
     get:
       description: 'Get attributes of the object specified by rolePath'
       responses:
@@ -60,6 +62,11 @@ documentation:
               type: !include schemas/bulkProperties-get-response.json
               example: !include ../examples/bulkProperties-get-200.json
       options:
+        description: A pre-flight check generally used for Cross-Origin Resource Sharing (CORS) purposes
+        responses:
+          200:
+          403:
+      patch:
         description: 'Validate an NcBulkValuesHolder object against the Device Model'
         body:
           type: !include schemas/bulkProperties-validate-request.json
@@ -102,7 +109,15 @@ documentation:
               example: !include ../examples/methods-base-get-200.json
               type: !include schemas/methods-base.json
       /{methodId}:
-        displayName: 'Invoke Method.'
+        uriParameters:
+            methodId:
+                type: string
+                pattern: "^[0-9]+m[0-9]+"
+        options:
+          description: A pre-flight check generally used for Cross-Origin Resource Sharing (CORS) purposes
+          responses:
+            200:
+            403:
         patch:
           description: 'Invoke method.'
           body:
@@ -135,7 +150,10 @@ documentation:
               example: !include ../examples/properties-base-get-200.json
               type: !include schemas/properties-base.json
       /{propertyId}:
-        displayName: 'Attributes of a Property'
+        uriParameters:
+            propertyId:
+                type: string
+                pattern: "^[0-9]+p[0-9]+"
         get:
           description: 'Get attributes of a Property'
           responses:
@@ -173,6 +191,11 @@ documentation:
                 description: 'Returned when the Property was unable to be retrieved. Corresponds to NcMethodStatus code 500.'
                 body:
                   type: !include schemas/ms05-error.json
+          options:
+            description: A pre-flight check generally used for Cross-Origin Resource Sharing (CORS) purposes
+            responses:
+              200:
+              403:
           put:
             descriptions: 'Put value of a Property'
             body:
