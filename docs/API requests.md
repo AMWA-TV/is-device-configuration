@@ -8,7 +8,7 @@ Concurrency control is left to specific device implementations, however devices 
 
 ## URL and usage
 
-The URL provided in the [IS-04 device](IS-04%20interactions.md) is used as the base URL for all subsequent requests.
+The URL provided in the [IS-04 device configuration control](IS-04%20interactions.md) MUST be used as the base URL for all subsequent requests.
 
 As described in the Configuration API, the [rolePaths](https://specs.amwa.tv/is-14/branches/v1.0-dev/APIs/ConfigurationAPI.html#rolepaths_get) endpoint MUST return all the device model's role paths. Each `rolePath` MUST be created by appending [NcObject roles](https://specs.amwa.tv/ms-05-02/latest/docs/NcObject.html) starting with the `root block` and using `.` as the delimiter. Consequently the `.` character MUST not be used inside individual object roles.
 
@@ -16,12 +16,12 @@ It is RECOMMENDED for device model objects roles to use `Unreserved Characters` 
 
 Device model object roles are case sensitive and thus any `rolePaths` and URLs which include them are also case sensitive as described in [RFC 7230](https://datatracker.ietf.org/doc/html/rfc7230#section-2.7.3).
 
-Property identifiers are defined as `{propertyLevel}p{propertyIndex}` where:
+Property identifiers used as part of a URL MUST be represented as a string of the format `{propertyLevel}p{propertyIndex}` where:
 
 - propertyLevel - number representing the inheritance level of the class containing the property (see [Control Classes](https://specs.amwa.tv/ms-05-02/latest/docs/Framework.html#control-classes))
 - propertyIndex - number representing the index level of the property within the specified inheritance level (see [Control Classes](https://specs.amwa.tv/ms-05-02/latest/docs/Framework.html#control-classes))
 
-Method identifiers are fined as `{methodLevel}m{methodIndex}` where:
+Method identifiers used as part of a URL MUST be represented as a string of the format `{methodLevel}m{methodIndex}` where:
 
 - methodLevel - number representing the inheritance level of the class containing the method (see [Control Classes](https://specs.amwa.tv/ms-05-02/latest/docs/Framework.html#control-classes))
 - methodIndex - number representing the index level of the method within the specified inheritance level (see [Control Classes](https://specs.amwa.tv/ms-05-02/latest/docs/Framework.html#control-classes))
@@ -49,7 +49,7 @@ The following subsections define common use cases for the applicable HTTP verbs 
 |:--:|
 | _**Getting a property**_ |
 
-The URL MUST target a specific property of an object by locating the object using its role path and the property using its propertyId. The response MUST be of type [NcMethodResultPropertyValue](https://specs.amwa.tv/ms-05-02/latest/docs/Framework.html#ncmethodresultpropertyvalue) with the contents of that property. If the request encountered an error then the response result returned MUST inherit from [NcMethodResultError](https://specs.amwa.tv/ms-05-02/latest/docs/Framework.html#ncmethodresulterror) and include an errorMessage of type [NcString](https://specs.amwa.tv/ms-05-02/latest/docs/Framework.html#primitives).
+The URL MUST target a specific property of an object by locating the object using its role path and the property using its property identifier as per the following format `baseUrl/rolePaths/{rolePath}/properties/{propertyId}/value`. The response MUST be of type [NcMethodResultPropertyValue](https://specs.amwa.tv/ms-05-02/latest/docs/Framework.html#ncmethodresultpropertyvalue) with the contents of that property when successful. If the request encountered an error then the response result returned MUST inherit from [NcMethodResultError](https://specs.amwa.tv/ms-05-02/latest/docs/Framework.html#ncmethodresulterror) and include an errorMessage of type [NcString](https://specs.amwa.tv/ms-05-02/latest/docs/Framework.html#primitives).
 
 This is equivalent to invoking the generic [Get method](https://specs.amwa.tv/ms-05-02/latest/docs/NcObject.html#generic-getter-and-setter) on the specific object for the required property.
 
@@ -59,7 +59,7 @@ This is equivalent to invoking the generic [Get method](https://specs.amwa.tv/ms
 |:--:|
 | _**Getting class descriptor**_ |
 
-The URL MUST target a specific object in the device model. Devices treat this as a request to retrieve the [class descriptor](https://specs.amwa.tv/ms-05-02/latest/docs/Framework.html#ncclassdescriptor) of that object's class and MUST return a response of type [NcMethodResultClassDescriptor](https://specs.amwa.tv/ms-05-02/latest/docs/Framework.html#ncmethodresultclassdescriptor) with a descriptor which includes all inherited elements. If the request encountered an error then the response result returned MUST inherit from [NcMethodResultError](https://specs.amwa.tv/ms-05-02/latest/docs/Framework.html#ncmethodresulterror) and include an errorMessage of type [NcString](https://specs.amwa.tv/ms-05-02/latest/docs/Framework.html#primitives).
+The URL MUST target a specific object in the device model as per the following format `baseUrl/rolePaths/{rolePath}/descriptor`. A successful response MUST be of type [NcMethodResultClassDescriptor](https://specs.amwa.tv/ms-05-02/latest/docs/Framework.html#ncmethodresultclassdescriptor) with a descriptor which includes all inherited elements. If the request encountered an error then the response result returned MUST inherit from [NcMethodResultError](https://specs.amwa.tv/ms-05-02/latest/docs/Framework.html#ncmethodresulterror) and include an errorMessage of type [NcString](https://specs.amwa.tv/ms-05-02/latest/docs/Framework.html#primitives).
 
 This is equivalent to invoking the [GetControlClass method](https://specs.amwa.tv/ms-05-02/latest/docs/Framework.html#ncclassmanager) on the [Class Manager object](https://specs.amwa.tv/ms-05-02/latest/docs/Managers.html#class-manager) and including all inherited elements.
 
