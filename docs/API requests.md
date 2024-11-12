@@ -69,9 +69,9 @@ This is equivalent to invoking the [GetControlClass method](https://specs.amwa.t
 |:--:|
 | _**Getting datatype descriptor**_ |
 
-The URL MUST target a specific property of an object by locating the object using its role path and the property using its propertyId. Devices treat this as a request to retrieve the [datatype descriptor](https://specs.amwa.tv/ms-05-02/latest/docs/Framework.html#ncdatatypedescriptor) of that property and MUST return a response of type [NcMethodResultDatatypeDescriptor](https://specs.amwa.tv/ms-05-02/latest/docs/Framework.html#ncmethodresultdatatypedescriptor) with a descriptor which includes all inherited elements. If the request encountered an error then the response result returned MUST inherit from [NcMethodResultError](https://specs.amwa.tv/ms-05-02/latest/docs/Framework.html#ncmethodresulterror) and include an errorMessage of type [NcString](https://specs.amwa.tv/ms-05-02/latest/docs/Framework.html#primitives).
+The URL MUST target a specific property of an object by locating the object using its role path and the property using its property identifier as per the following format `baseUrl/rolePaths/{rolePath}/properties/{propertyId}/descriptor`. A successful response MUST be of type [NcMethodResultDatatypeDescriptor](https://specs.amwa.tv/ms-05-02/latest/docs/Framework.html#ncmethodresultdatatypedescriptor) with a descriptor which includes inherited elements. If the request encountered an error then the response result returned MUST inherit from [NcMethodResultError](https://specs.amwa.tv/ms-05-02/latest/docs/Framework.html#ncmethodresulterror) and include an errorMessage of type [NcString](https://specs.amwa.tv/ms-05-02/latest/docs/Framework.html#primitives).
 
-This is equivalent to invoking the [GetDatatype method](https://specs.amwa.tv/ms-05-02/latest/docs/Framework.html#ncclassmanager) on the [Class Manager object](https://specs.amwa.tv/ms-05-02/latest/docs/Managers.html#class-manager) and including all inherited elements.
+This is equivalent to invoking the [GetDatatype method](https://specs.amwa.tv/ms-05-02/latest/docs/Framework.html#ncclassmanager) on the [Class Manager object](https://specs.amwa.tv/ms-05-02/latest/docs/Managers.html#class-manager) and including inherited elements.
 
 ### Getting all the properties of a role path
 
@@ -79,15 +79,15 @@ This is equivalent to invoking the [GetDatatype method](https://specs.amwa.tv/ms
 |:--:|
 | _**Getting bulk properties**_ |
 
-The URL MUST target a specific role path in the device model. This MUST retrieve all the properties of that role path as a [bulk values holder](https://specs.amwa.tv/nmos-control-feature-sets/branches/publish-device-configuration/device-configuration/#ncbulkvaluesholder) and MUST return a response of type [NcMethodResultBulkValuesHolder](https://specs.amwa.tv/nmos-control-feature-sets/branches/publish-device-configuration/device-configuration/#ncmethodresultbulkvaluesholder). If the `recurse` query parameter is set to `true` then the response MUST include the values of the target role path as well as any nested role paths. Not including the `recurse` query parameter MUST be treated as providing a `recurse` value of `true`. If the request encountered an error then the response result returned MUST inherit from [NcMethodResultError](https://specs.amwa.tv/ms-05-02/latest/docs/Framework.html#ncmethodresulterror) and include an `errorMessage` of type [NcString](https://specs.amwa.tv/ms-05-02/latest/docs/Framework.html#primitives). If devices cannot accept backup requests due to temporary internal constraints (e.g. requires to be in maintenance mode) then they MUST use a status of `NotReady` and supply further details on the reason for this in the `errorMessage`.
+The URL MUST target a specific role path in the device model by locating the object using its role path and optionally specifying the `recurse` parameter as per the following format `baseUrl/rolePaths/{rolePath}/bulkProperties?recurse={true|false}`. Not including the `recurse` query parameter MUST be treated as providing a `recurse` argument of `true`. A successful response MUST be of type [NcMethodResultBulkValuesHolder](https://specs.amwa.tv/nmos-control-feature-sets/branches/publish-device-configuration/device-configuration/#ncmethodresultbulkvaluesholder) and MUST include all the properties of the target role path as a [bulk values holder](https://specs.amwa.tv/nmos-control-feature-sets/branches/publish-device-configuration/device-configuration/#ncbulkvaluesholder). If the `recurse` argument is set to `true` then the response MUST include all the properties of the target role path as well as any nested role paths in a successful response. If the request encountered an error then the response result returned MUST inherit from [NcMethodResultError](https://specs.amwa.tv/ms-05-02/latest/docs/Framework.html#ncmethodresulterror) and include an errorMessage of type [NcString](https://specs.amwa.tv/ms-05-02/latest/docs/Framework.html#primitives).
 
 This is equivalent to invoking the `GetPropertiesByPath` method on the [Bulk properties manager object](https://specs.amwa.tv/nmos-control-feature-sets/branches/publish-device-configuration/device-configuration/#ncbulkpropertiesmanager).
 
 Retrieving properties through the `bulkProperties` endpoint allows a user to perform a `full backup` or a `partial backup`.
 
-A `full backup` is a [backup data set](Backup%20&%20restore.md#definitions) returned by a `GET` operation on the `/bulkProperties` endpoint of the root block with the `recurse` parameter set to true.
+A `full backup` is a [backup data set](Backup%20&%20restore.md#definitions) returned by a `GET` operation on the `/bulkProperties` endpoint of the root block with the `recurse` parameter set to `true`.
 
-A `partial backup` is a [backup data set](Backup%20&%20restore.md#definitions) returned by a `GET` operation on the `/bulkProperties` endpoint of any object of the device model, other than the root block. A partial backup can also be obtained by a `GET` operation on the `/bulkProperties` endpoint of the root block with the `recurse` query parameter set to false; however this will only result in a backup of the root block only.
+A `partial backup` is a [backup data set](Backup%20&%20restore.md#definitions) returned by a `GET` operation on the `/bulkProperties` endpoint of any object of the device model, other than the root block. A partial backup can also be obtained by a `GET` operation on the `/bulkProperties` endpoint of the root block with the `recurse` query parameter set to `false`; however this will only result in a backup of the root block only.
 
 ## PUT
 
@@ -99,7 +99,7 @@ A `partial backup` is a [backup data set](Backup%20&%20restore.md#definitions) r
 
 The PUT verb MUST be used for setting individual object properties.
 
-The URL MUST target a specific property of an object by locating the object using its role path and the property using its propertyId. The response MUST be of type [NcMethodResult](https://specs.amwa.tv/ms-05-02/latest/docs/Framework.html#ncmethodresult). If the request encountered an error then the response result returned MUST inherit from [NcMethodResultError](https://specs.amwa.tv/ms-05-02/latest/docs/Framework.html#ncmethodresulterror) and include an errorMessage of type [NcString](https://specs.amwa.tv/ms-05-02/latest/docs/Framework.html#primitives).
+The URL MUST target a specific property of an object by locating the object using its role path and the property using its property identifier as per the following format `baseUrl/rolePaths/{rolePath}/properties/{propertyId}/value`. A successful response MUST be of type [NcMethodResult](https://specs.amwa.tv/ms-05-02/latest/docs/Framework.html#ncmethodresult). If the request encountered an error then the response result returned MUST inherit from [NcMethodResultError](https://specs.amwa.tv/ms-05-02/latest/docs/Framework.html#ncmethodresulterror) and include an errorMessage of type [NcString](https://specs.amwa.tv/ms-05-02/latest/docs/Framework.html#primitives).
 
 The body of the request MUST include an object which includes the new value of the property as per the [property-value-put-request](https://specs.amwa.tv/is-14/branches/v1.0-dev/APIs/schemas/property-value-put-request.json) schema.
 
@@ -113,8 +113,9 @@ This is equivalent to invoking the generic [Set method](https://specs.amwa.tv/ms
 
 The PUT verb MUST be used for setting a bulk properties data set.
 
-The URL MUST target a specific role path.
-The body of the request MUST include an object which includes an `arguments` object with `dataSet`, `recurse` and `restoreMode` sub elements.
+The URL MUST target a specific role path by locating the object using its role path as per the following format `baseUrl/rolePaths/{rolePath}/bulkProperties`.
+
+The body of the request MUST include an object which includes an `arguments` object with `dataSet`, `recurse` and `restoreMode` sub elements as per the [bulkProperties-set-request](https://specs.amwa.tv/is-14/branches/v1.0-dev/APIs/schemas/bulkProperties-set-request.json) schema.
 
 ```json
 {
@@ -128,11 +129,9 @@ The body of the request MUST include an object which includes an `arguments` obj
 }
 ```
 
-If the `recurse` value is `true` then the device will attempt to use the provided `dataSet` to set the properties of the target role path and all nested role paths.
+If the `recurse` value is `true` then the device MUST target the properties of the target role path and all nested role paths in its attempt to use the provided `dataSet`.
 
-For a full schema of the required body object see the [bulkProperties-set-request](https://specs.amwa.tv/is-14/branches/v1.0-dev/APIs/schemas/bulkProperties-set-request.json) schema.
-
-The response MUST be of type [NcMethodResultObjectPropertiesSetValidation](https://specs.amwa.tv/nmos-control-feature-sets/branches/publish-device-configuration/device-configuration/#ncmethodresultobjectpropertiessetvalidation). If the request encountered an error then the response result returned MUST inherit from [NcMethodResultError](https://specs.amwa.tv/ms-05-02/latest/docs/Framework.html#ncmethodresulterror) and include an errorMessage of type [NcString](https://specs.amwa.tv/ms-05-02/latest/docs/Framework.html#primitives). If devices cannot accept restore requests due to temporary internal constraints then they MUST use a status of `NotReady` and supply further details on the reason for this in the errorMessage.
+A successful response MUST be of type [NcMethodResultObjectPropertiesSetValidation](https://specs.amwa.tv/nmos-control-feature-sets/branches/publish-device-configuration/device-configuration/#ncmethodresultobjectpropertiessetvalidation). If the request encountered an error then the response result returned MUST inherit from [NcMethodResultError](https://specs.amwa.tv/ms-05-02/latest/docs/Framework.html#ncmethodresulterror) and include an errorMessage of type [NcString](https://specs.amwa.tv/ms-05-02/latest/docs/Framework.html#primitives).
 
 This is equivalent to invoking the `SetPropertiesByPath` method inside the [Bulk properties manager object](https://specs.amwa.tv/nmos-control-feature-sets/branches/publish-device-configuration/device-configuration/#ncbulkpropertiesmanager).
 
