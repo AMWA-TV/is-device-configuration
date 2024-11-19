@@ -1,6 +1,8 @@
-# Data type marshalling
+# Datatype marshalling
 
-| Type                         | JSON representation                      |
+The following MS-05-02 datatypes MUST map to the corresponding JSON representations.
+
+| Datatype type                | JSON representation                      |
 | ---------------------------- | ---------------------------------------- |
 | enums                        | Integer associated enum value            |
 | NcString                     | string                                   |
