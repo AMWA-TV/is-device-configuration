@@ -113,7 +113,7 @@ This is equivalent to invoking the generic [Set method](https://specs.amwa.tv/ms
 
 The PUT verb MUST be used for setting a bulk properties data set.
 
-The URL MUST target a specific role path by locating the object using its role path as per the following format `baseUrl/rolePaths/{rolePath}/bulkProperties`.
+The URL MUST target a specific object using its role path as per the following format `baseUrl/rolePaths/{rolePath}/bulkProperties`.
 
 The body of the request MUST include an object which includes an `arguments` object with `dataSet`, `recurse` and `restoreMode` sub elements as per the [bulkProperties-set-request](https://specs.amwa.tv/is-14/branches/v1.0-dev/APIs/schemas/bulkProperties-set-request.json) schema.
 
@@ -147,8 +147,9 @@ Setting properties through the `bulkProperties` endpoint allows a user to perfor
 
 The PATCH verb MUST be used for invoking object methods.
 
-The URL MUST target a specific object by locating the object using its role path.
-The body of the request MUST include an object which includes an `arguments` object. For methods which do not have arguments defined the request body MUST include an empty `arguments` object.
+The URL MUST target a specific method of an object by locating the object using its role path and the method using its method identifier as per the following format `baseUrl/rolePaths/{rolePath}/methods/{methodId}`.
+
+The body of the request MUST include an object which includes an `arguments` object as per the [method-patch-request](https://specs.amwa.tv/is-14/branches/v1.0-dev/APIs/schemas/method-patch-request.json) schema. For methods which do not have arguments defined the request body MUST include an empty `arguments` object.
 
 ```json
 {
@@ -158,9 +159,7 @@ The body of the request MUST include an object which includes an `arguments` obj
 }
 ```
 
-For a full schema of the required body object see the [method-patch-request](https://specs.amwa.tv/is-14/branches/v1.0-dev/APIs/schemas/method-patch-request.json) schema.
-
-The response MUST be of type [NcMethodResult](https://specs.amwa.tv/ms-05-02/latest/docs/Framework.html#ncmethodresult) or a derived type. If the request encountered an error then the response result returned MUST inherit from [NcMethodResultError](https://specs.amwa.tv/ms-05-02/latest/docs/Framework.html#ncmethodresulterror) and include an errorMessage of type [NcString](https://specs.amwa.tv/ms-05-02/latest/docs/Framework.html#primitives).
+A successful response MUST be of type [NcMethodResult](https://specs.amwa.tv/ms-05-02/latest/docs/Framework.html#ncmethodresult). If the request encountered an error then the response result returned MUST inherit from [NcMethodResultError](https://specs.amwa.tv/ms-05-02/latest/docs/Framework.html#ncmethodresulterror) and include an errorMessage of type [NcString](https://specs.amwa.tv/ms-05-02/latest/docs/Framework.html#primitives).
 
 This is equivalent to invoking the specified method.
 
@@ -172,8 +171,8 @@ This is equivalent to invoking the specified method.
 
 The PATCH verb MUST be used for validating a bulk properties data set.
 
-The URL MUST target a specific role path.
-The body of the request MUST include an object which includes an `arguments` object with `dataSet`, `recurse` and `restoreMode` sub elements.
+The URL MUST target a specific object using its role path as per the following format `baseUrl/rolePaths/{rolePath}/bulkProperties`.
+The body of the request MUST include an object which includes an `arguments` object with `dataSet`, `recurse` and `restoreMode` sub elements as per the [bulkProperties-validate-request](https://specs.amwa.tv/is-14/branches/v1.0-dev/APIs/schemas/bulkProperties-validate-request.json) schema.
 
 ```json
 {
@@ -187,10 +186,12 @@ The body of the request MUST include an object which includes an `arguments` obj
 }
 ```
 
-If the `recurse` value is `true` then the device will attempt to use the provided `dataSet` to validate the target role path and all nested role paths.
+If the `recurse` value is `true` then the device MUST target the properties of the target role path and all nested role paths in its attempt to use the provided `dataSet`.
 
-For a full schema of the required body object see the [bulkProperties-validate-request](https://specs.amwa.tv/is-14/branches/v1.0-dev/APIs/schemas/bulkProperties-validate-request.json) schema.
+A successful response MUST be of type [NcMethodResultObjectPropertiesSetValidation](https://specs.amwa.tv/nmos-control-feature-sets/branches/publish-device-configuration/device-configuration/#ncmethodresultobjectpropertiessetvalidation). If the request encountered an error then the response result returned MUST inherit from [NcMethodResultError](https://specs.amwa.tv/ms-05-02/latest/docs/Framework.html#ncmethodresulterror) and include an errorMessage of type [NcString](https://specs.amwa.tv/ms-05-02/latest/docs/Framework.html#primitives).
 
-The response MUST be of type [NcMethodResultObjectPropertiesSetValidation](https://specs.amwa.tv/nmos-control-feature-sets/branches/publish-device-configuration/device-configuration/#ncmethodresultobjectpropertiessetvalidation). If the request encountered an error then the response result returned MUST inherit from [NcMethodResultError](https://specs.amwa.tv/ms-05-02/latest/docs/Framework.html#ncmethodresulterror) and include an errorMessage of type [NcString](https://specs.amwa.tv/ms-05-02/latest/docs/Framework.html#primitives).
+An API call to validate bulk properties MUST NOT result in any changes to the device model.
 
 This is equivalent to invoking the `ValidateSetPropertiesByPath` method inside the [Bulk properties manager object](https://specs.amwa.tv/nmos-control-feature-sets/branches/publish-device-configuration/device-configuration/#ncbulkpropertiesmanager).
+
+This provides a validation mechanism for a client to use before attempting to perform a restore by applying [bulk properties](#setting-bulk-properties-for-a-role-path).
