@@ -8,7 +8,7 @@ Concurrency control is left to specific device implementations, however devices 
 
 ## URL and usage
 
-The URL provided in the [IS-04 device configuration control](IS-04%20interactions.md) MUST be used as the base URL for all subsequent requests.
+The 'control' endpoint URL provided in the [IS-04 device](IS-04%20interactions.md) MUST be used as the base URL for all subsequent requests.
 
 As described in the Configuration API, the [rolePaths](https://specs.amwa.tv/is-14/branches/v1.0-dev/APIs/ConfigurationAPI.html#rolepaths_get) endpoint MUST return all the device model's role paths. Each `rolePath` MUST be created by appending [NcObject roles](https://specs.amwa.tv/ms-05-02/latest/docs/NcObject.html) starting with the `root block` and using `.` as the delimiter. Consequently the `.` character MUST not be used inside individual object roles.
 
