@@ -49,7 +49,7 @@ The following subsections define common use cases for the applicable HTTP verbs 
 |:--:|
 | _**Getting a property**_ |
 
-The URL MUST target a specific property of an object by locating the object using its role path and the property using its property identifier as per the following format `baseUrl/rolePaths/{rolePath}/properties/{propertyId}/value`. The response MUST be of type [NcMethodResultPropertyValue](https://specs.amwa.tv/ms-05-02/latest/docs/Framework.html#ncmethodresultpropertyvalue) containing the value of that property when successful. If the request encountered an error then the response result returned MUST inherit from [NcMethodResultError](https://specs.amwa.tv/ms-05-02/latest/docs/Framework.html#ncmethodresulterror) and include an errorMessage of type [NcString](https://specs.amwa.tv/ms-05-02/latest/docs/Framework.html#primitives).
+The URL MUST target a specific property of an object by locating the object using its role path and the property using its property identifier as per the following format `baseUrl/rolePaths/{rolePath}/properties/{propertyId}/value`. The response MUST be of type [NcMethodResultPropertyValue](https://specs.amwa.tv/ms-05-02/latest/docs/Framework.html#ncmethodresultpropertyvalue) containing the value of that property when successful. If the request encountered an error then the response result returned MUST inherit from [NcMethodResultError](https://specs.amwa.tv/ms-05-02/latest/docs/Framework.html#ncmethodresulterror) and include an error message.
 
 This is equivalent to invoking the generic [Get method](https://specs.amwa.tv/ms-05-02/latest/docs/NcObject.html#generic-getter-and-setter) on the specific object for the required property.
 
@@ -59,7 +59,7 @@ This is equivalent to invoking the generic [Get method](https://specs.amwa.tv/ms
 |:--:|
 | _**Getting class descriptor**_ |
 
-The URL MUST target a specific object in the device model as per the following format `baseUrl/rolePaths/{rolePath}/descriptor`. A successful response MUST be of type [NcMethodResultClassDescriptor](https://specs.amwa.tv/ms-05-02/latest/docs/Framework.html#ncmethodresultclassdescriptor) including a descriptor which has all inherited elements. If the request encountered an error then the response result returned MUST inherit from [NcMethodResultError](https://specs.amwa.tv/ms-05-02/latest/docs/Framework.html#ncmethodresulterror) and include an errorMessage of type [NcString](https://specs.amwa.tv/ms-05-02/latest/docs/Framework.html#primitives).
+The URL MUST target a specific object in the device model as per the following format `baseUrl/rolePaths/{rolePath}/descriptor`. A successful response MUST be of type [NcMethodResultClassDescriptor](https://specs.amwa.tv/ms-05-02/latest/docs/Framework.html#ncmethodresultclassdescriptor) including a descriptor which has all inherited elements. If the request encountered an error then the response result returned MUST inherit from [NcMethodResultError](https://specs.amwa.tv/ms-05-02/latest/docs/Framework.html#ncmethodresulterror) and include an error message.
 
 This is equivalent to invoking the [GetControlClass method](https://specs.amwa.tv/ms-05-02/latest/docs/Framework.html#ncclassmanager) on the [Class Manager object](https://specs.amwa.tv/ms-05-02/latest/docs/Managers.html#class-manager) and including all inherited elements.
 
@@ -69,7 +69,7 @@ This is equivalent to invoking the [GetControlClass method](https://specs.amwa.t
 |:--:|
 | _**Getting datatype descriptor**_ |
 
-The URL MUST target a specific property of an object by locating the object using its role path and the property using its property identifier as per the following format `baseUrl/rolePaths/{rolePath}/properties/{propertyId}/descriptor`. A successful response MUST be of type [NcMethodResultDatatypeDescriptor](https://specs.amwa.tv/ms-05-02/latest/docs/Framework.html#ncmethodresultdatatypedescriptor) including a descriptor which has all inherited elements. If the request encountered an error then the response result returned MUST inherit from [NcMethodResultError](https://specs.amwa.tv/ms-05-02/latest/docs/Framework.html#ncmethodresulterror) and include an errorMessage of type [NcString](https://specs.amwa.tv/ms-05-02/latest/docs/Framework.html#primitives).
+The URL MUST target a specific property of an object by locating the object using its role path and the property using its property identifier as per the following format `baseUrl/rolePaths/{rolePath}/properties/{propertyId}/descriptor`. A successful response MUST be of type [NcMethodResultDatatypeDescriptor](https://specs.amwa.tv/ms-05-02/latest/docs/Framework.html#ncmethodresultdatatypedescriptor) including a descriptor which has all inherited elements. If the request encountered an error then the response result returned MUST inherit from [NcMethodResultError](https://specs.amwa.tv/ms-05-02/latest/docs/Framework.html#ncmethodresulterror) and include an error message.
 
 This is equivalent to invoking the [GetDatatype method](https://specs.amwa.tv/ms-05-02/latest/docs/Framework.html#ncclassmanager) on the [Class Manager object](https://specs.amwa.tv/ms-05-02/latest/docs/Managers.html#class-manager) and including inherited elements.
 
@@ -79,7 +79,7 @@ This is equivalent to invoking the [GetDatatype method](https://specs.amwa.tv/ms
 |:--:|
 | _**Getting bulk properties**_ |
 
-The URL MUST target a specific role path in the device model by locating the object using its role path and optionally specifying the `recurse` parameter as per the following format `baseUrl/rolePaths/{rolePath}/bulkProperties?recurse={true|false}`. Not including the `recurse` query parameter MUST be treated as providing a `recurse` argument of `true`. A successful response MUST be of type [NcMethodResultBulkValuesHolder](https://specs.amwa.tv/nmos-control-feature-sets/branches/publish-device-configuration/device-configuration/#ncmethodresultbulkvaluesholder) and MUST include all the properties of the target role path as a [bulk values holder](https://specs.amwa.tv/nmos-control-feature-sets/branches/publish-device-configuration/device-configuration/#ncbulkvaluesholder). If the `recurse` argument is set to `true` then the response MUST include all the properties of the target role path as well as any nested role paths in a successful response. If the request encountered an error then the response result returned MUST inherit from [NcMethodResultError](https://specs.amwa.tv/ms-05-02/latest/docs/Framework.html#ncmethodresulterror) and include an errorMessage of type [NcString](https://specs.amwa.tv/ms-05-02/latest/docs/Framework.html#primitives).
+The URL MUST target a specific role path in the device model by locating the object using its role path and optionally specifying the `recurse` parameter as per the following format `baseUrl/rolePaths/{rolePath}/bulkProperties?recurse={true|false}`. Not including the `recurse` query parameter MUST be treated as providing a `recurse` argument of `true`. A successful response MUST be of type [NcMethodResultBulkValuesHolder](https://specs.amwa.tv/nmos-control-feature-sets/branches/publish-device-configuration/device-configuration/#ncmethodresultbulkvaluesholder) and MUST include all the properties of the target role path as a [bulk values holder](https://specs.amwa.tv/nmos-control-feature-sets/branches/publish-device-configuration/device-configuration/#ncbulkvaluesholder). If the `recurse` argument is set to `true` then the response MUST include all the properties of the target role path as well as any nested role paths in a successful response. If the request encountered an error then the response result returned MUST inherit from [NcMethodResultError](https://specs.amwa.tv/ms-05-02/latest/docs/Framework.html#ncmethodresulterror) and include an error message.
 
 This is equivalent to invoking the `GetPropertiesByPath` method on the [Bulk properties manager object](https://specs.amwa.tv/nmos-control-feature-sets/branches/publish-device-configuration/device-configuration/#ncbulkpropertiesmanager).
 
@@ -99,7 +99,7 @@ A `partial backup` is a [backup data set](Backup%20&%20restore.md#definitions) r
 
 The PUT verb MUST be used for setting individual object properties.
 
-The URL MUST target a specific property of an object by locating the object using its role path and the property using its property identifier as per the following format `baseUrl/rolePaths/{rolePath}/properties/{propertyId}/value`. A successful response MUST be of type [NcMethodResult](https://specs.amwa.tv/ms-05-02/latest/docs/Framework.html#ncmethodresult). If the request encountered an error then the response result returned MUST inherit from [NcMethodResultError](https://specs.amwa.tv/ms-05-02/latest/docs/Framework.html#ncmethodresulterror) and include an errorMessage of type [NcString](https://specs.amwa.tv/ms-05-02/latest/docs/Framework.html#primitives).
+The URL MUST target a specific property of an object by locating the object using its role path and the property using its property identifier as per the following format `baseUrl/rolePaths/{rolePath}/properties/{propertyId}/value`. A successful response MUST be of type [NcMethodResult](https://specs.amwa.tv/ms-05-02/latest/docs/Framework.html#ncmethodresult). If the request encountered an error then the response result returned MUST inherit from [NcMethodResultError](https://specs.amwa.tv/ms-05-02/latest/docs/Framework.html#ncmethodresulterror) and include an error message.
 
 The body of the request MUST include an object which includes the new value of the property as per the [property-value-put-request](https://specs.amwa.tv/is-14/branches/v1.0-dev/APIs/schemas/property-value-put-request.json) schema.
 
@@ -131,7 +131,7 @@ The body of the request MUST include an object which includes an `arguments` obj
 
 If the `recurse` value is `true` then the device MUST target the properties of the target role path and all nested role paths in its attempt to use the provided `dataSet`.
 
-A successful response MUST be of type [NcMethodResultObjectPropertiesSetValidation](https://specs.amwa.tv/nmos-control-feature-sets/branches/publish-device-configuration/device-configuration/#ncmethodresultobjectpropertiessetvalidation). If the request encountered an error then the response result returned MUST inherit from [NcMethodResultError](https://specs.amwa.tv/ms-05-02/latest/docs/Framework.html#ncmethodresulterror) and include an errorMessage of type [NcString](https://specs.amwa.tv/ms-05-02/latest/docs/Framework.html#primitives).
+A successful response MUST be of type [NcMethodResultObjectPropertiesSetValidation](https://specs.amwa.tv/nmos-control-feature-sets/branches/publish-device-configuration/device-configuration/#ncmethodresultobjectpropertiessetvalidation). If the request encountered an error then the response result returned MUST inherit from [NcMethodResultError](https://specs.amwa.tv/ms-05-02/latest/docs/Framework.html#ncmethodresulterror) and include an error message.
 
 This is equivalent to invoking the `SetPropertiesByPath` method inside the [Bulk properties manager object](https://specs.amwa.tv/nmos-control-feature-sets/branches/publish-device-configuration/device-configuration/#ncbulkpropertiesmanager).
 
@@ -159,7 +159,7 @@ The body of the request MUST include an object which includes an `arguments` obj
 }
 ```
 
-A successful response MUST be of type [NcMethodResult](https://specs.amwa.tv/ms-05-02/latest/docs/Framework.html#ncmethodresult). If the request encountered an error then the response MUST either be of the type, or inherited from the type, [NcMethodResultError](https://specs.amwa.tv/ms-05-02/latest/docs/Framework.html#ncmethodresulterror) and include an errorMessage of type [NcString](https://specs.amwa.tv/ms-05-02/latest/docs/Framework.html#primitives).
+A successful response MUST be of type [NcMethodResult](https://specs.amwa.tv/ms-05-02/latest/docs/Framework.html#ncmethodresult). If the request encountered an error then the response MUST either be of the type, or inherited from the type, [NcMethodResultError](https://specs.amwa.tv/ms-05-02/latest/docs/Framework.html#ncmethodresulterror) and include an error message.
 
 This is equivalent to invoking the specified method.
 
@@ -188,7 +188,7 @@ The body of the request MUST include an object which includes an `arguments` obj
 
 If the `recurse` value is `true` then the device MUST target the properties of the target role path and all nested role paths in its attempt to use the provided `dataSet`.
 
-A successful response MUST be of type [NcMethodResultObjectPropertiesSetValidation](https://specs.amwa.tv/nmos-control-feature-sets/branches/publish-device-configuration/device-configuration/#ncmethodresultobjectpropertiessetvalidation). If the request encountered an error then the response result returned MUST inherit from [NcMethodResultError](https://specs.amwa.tv/ms-05-02/latest/docs/Framework.html#ncmethodresulterror) and include an errorMessage of type [NcString](https://specs.amwa.tv/ms-05-02/latest/docs/Framework.html#primitives).
+A successful response MUST be of type [NcMethodResultObjectPropertiesSetValidation](https://specs.amwa.tv/nmos-control-feature-sets/branches/publish-device-configuration/device-configuration/#ncmethodresultobjectpropertiessetvalidation). If the request encountered an error then the response result returned MUST inherit from [NcMethodResultError](https://specs.amwa.tv/ms-05-02/latest/docs/Framework.html#ncmethodresulterror) and include an error message.
 
 An API call to validate bulk properties MUST NOT result in any changes to the device model.
 
