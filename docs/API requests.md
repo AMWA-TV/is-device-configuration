@@ -59,7 +59,7 @@ This is equivalent to invoking the generic [Get method](https://specs.amwa.tv/ms
 |:--:|
 | _**Getting class descriptor**_ |
 
-The URL MUST target a specific object in the device model as per the following format `baseUrl/rolePaths/{rolePath}/descriptor`. A successful response MUST be of type [NcMethodResultClassDescriptor](https://specs.amwa.tv/ms-05-02/latest/docs/Framework.html#ncmethodresultclassdescriptor) with a descriptor which includes all inherited elements. If the request encountered an error then the response result returned MUST inherit from [NcMethodResultError](https://specs.amwa.tv/ms-05-02/latest/docs/Framework.html#ncmethodresulterror) and include an errorMessage of type [NcString](https://specs.amwa.tv/ms-05-02/latest/docs/Framework.html#primitives).
+The URL MUST target a specific object in the device model as per the following format `baseUrl/rolePaths/{rolePath}/descriptor`. A successful response MUST be of type [NcMethodResultClassDescriptor](https://specs.amwa.tv/ms-05-02/latest/docs/Framework.html#ncmethodresultclassdescriptor) including a descriptor which has all inherited elements. If the request encountered an error then the response result returned MUST inherit from [NcMethodResultError](https://specs.amwa.tv/ms-05-02/latest/docs/Framework.html#ncmethodresulterror) and include an errorMessage of type [NcString](https://specs.amwa.tv/ms-05-02/latest/docs/Framework.html#primitives).
 
 This is equivalent to invoking the [GetControlClass method](https://specs.amwa.tv/ms-05-02/latest/docs/Framework.html#ncclassmanager) on the [Class Manager object](https://specs.amwa.tv/ms-05-02/latest/docs/Managers.html#class-manager) and including all inherited elements.
 
