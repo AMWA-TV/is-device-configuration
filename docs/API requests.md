@@ -8,7 +8,7 @@ Concurrency control is left to specific device implementations, however devices 
 
 ## URL and usage
 
-The URL provided in the [IS-04 device configuration control](IS-04%20interactions.md) MUST be used as the base URL for all subsequent requests.
+The 'control' endpoint URL provided in the [IS-04 device](IS-04%20interactions.md) MUST be used as the base URL for all subsequent requests.
 
 As described in the Configuration API, the [rolePaths](https://specs.amwa.tv/is-14/branches/v1.0-dev/APIs/ConfigurationAPI.html#rolepaths_get) endpoint MUST return all the device model's role paths. Each `rolePath` MUST be created by appending [NcObject roles](https://specs.amwa.tv/ms-05-02/latest/docs/NcObject.html) starting with the `root block` and using `.` as the delimiter. Consequently the `.` character MUST not be used inside individual object roles.
 
@@ -49,7 +49,7 @@ The following subsections define common use cases for the applicable HTTP verbs 
 |:--:|
 | _**Getting a property**_ |
 
-The URL MUST target a specific property of an object by locating the object using its role path and the property using its property identifier as per the following format `baseUrl/rolePaths/{rolePath}/properties/{propertyId}/value`. The response MUST be of type [NcMethodResultPropertyValue](https://specs.amwa.tv/ms-05-02/latest/docs/Framework.html#ncmethodresultpropertyvalue) with the contents of that property when successful. If the request encountered an error then the response result returned MUST inherit from [NcMethodResultError](https://specs.amwa.tv/ms-05-02/latest/docs/Framework.html#ncmethodresulterror) and include an errorMessage of type [NcString](https://specs.amwa.tv/ms-05-02/latest/docs/Framework.html#primitives).
+The URL MUST target a specific property of an object by locating the object using its role path and the property using its property identifier as per the following format `baseUrl/rolePaths/{rolePath}/properties/{propertyId}/value`. The response MUST be of type [NcMethodResultPropertyValue](https://specs.amwa.tv/ms-05-02/latest/docs/Framework.html#ncmethodresultpropertyvalue) containing the value of that property when successful. If the request encountered an error then the response result returned MUST inherit from [NcMethodResultError](https://specs.amwa.tv/ms-05-02/latest/docs/Framework.html#ncmethodresulterror) and include an errorMessage of type [NcString](https://specs.amwa.tv/ms-05-02/latest/docs/Framework.html#primitives).
 
 This is equivalent to invoking the generic [Get method](https://specs.amwa.tv/ms-05-02/latest/docs/NcObject.html#generic-getter-and-setter) on the specific object for the required property.
 
@@ -159,7 +159,7 @@ The body of the request MUST include an object which includes an `arguments` obj
 }
 ```
 
-A successful response MUST be of type [NcMethodResult](https://specs.amwa.tv/ms-05-02/latest/docs/Framework.html#ncmethodresult). If the request encountered an error then the response result returned MUST inherit from [NcMethodResultError](https://specs.amwa.tv/ms-05-02/latest/docs/Framework.html#ncmethodresulterror) and include an errorMessage of type [NcString](https://specs.amwa.tv/ms-05-02/latest/docs/Framework.html#primitives).
+A successful response MUST be of type [NcMethodResult](https://specs.amwa.tv/ms-05-02/latest/docs/Framework.html#ncmethodresult). If the request encountered an error then the response MUST either be of the type, or inherited from the type, [NcMethodResultError](https://specs.amwa.tv/ms-05-02/latest/docs/Framework.html#ncmethodresulterror) and include an errorMessage of type [NcString](https://specs.amwa.tv/ms-05-02/latest/docs/Framework.html#primitives).
 
 This is equivalent to invoking the specified method.
 
