@@ -14,9 +14,9 @@ Examples of JSON format output are provided in the [examples](../examples/) fold
 ## API Validation
 
 JSON schemas are included with the RAML API definitions.
-These include validation for values used within the APIs.
+These schemas validate the communication with the API.
 It is strongly recommended that implementers of a Configuration API use these JSON schemas as part of a validation stage when receiving interactions from clients.
-Invalid payloads should cause a 400 HTTP error (Bad Request) to be returned to the client.
+MS-05 datatypes referenced in the schemas are defined in the [MS-05-02 specification](https://specs.amwa.tv/ms-05-02/branches/v1.0.x/models/datatypes/) and in the [NMOS Feature Sets Register](https://specs.amwa.tv/nmos-control-feature-sets/branches/publish-device-configuration/device-configuration/).
 
 ### Content Types
 
