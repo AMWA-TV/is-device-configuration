@@ -46,13 +46,14 @@ Role path objects within a backup data set contain a boolean property called `is
 
 The restore mechanism achieved by [Setting bulk properties for a role path](https://specs.amwa.tv/is-14/branches/v1.0-dev/docs/API_requests.html#setting-bulk-properties-for-a-role-path) affects the device model by either rebuilding it or modifying it.
 
-A restore mode of `Modify` MUST only be allowed to make changes to existing writeable properties of existing device model objects and cannot modify the device model in a structural way (cannot cause the addition or removal of objects from blocks).
+A restore with the restore mode set to `Modify` MUST only be allowed to make changes to existing writeable properties of existing device model objects and MUST NOT modify the device model in a structural way (cannot cause the addition or removal of objects from blocks).
 
-A restore mode of `Rebuild` allows the changes performed through the `Modify` mode and allows the following additional ones:
+A restore with the restore mode set to `Rebuild` MUST allow the following actions:
 
-- adding new members to rebuildable block objects by constructing new member objects (structural changes)
-- removing existing members from rebuildable block objects by deconstructing the member objects (structural changes)
-- reconstructing existing objects (constructing fresh objects which can accept changes even to its readonly properties)
+- make changes to existing writeable properties of existing device model objects
+- add new members to rebuildable block objects by constructing new member objects (structural changes)
+- remove existing members from rebuildable block objects by deconstructing the member objects (structural changes)
+- reconstruct existing rebuildable objects (constructing fresh objects which can accept changes even to its readonly properties)
 
 In the interest of interoperability even devices with no `rebuildable` device model objects MUST accept `Rebuild` restores but only perform the changes in scope for a `Modify` restore whilst including notices for any changes to readonly properties. Furthermore, performing a `Modify` restore MUST be possible even when the backup data set contains readonly properties since writeable properties will results in the desired changes being applied and the readonly properties will result in notices in the response returned.
 
