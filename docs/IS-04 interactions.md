@@ -10,7 +10,7 @@ The Configuration API MUST be advertised as a ‘control’ endpoint when publis
 Control interfaces MUST use the URN `urn:x-nmos:control:configuration` to identify all Devices which implement the Configuration API, and the URLs required to access them.
 For more details see [NMOS Device Control Types](https://specs.amwa.tv/nmos-parameter-registers/branches/main/device-control-types/).
 
-**Example 1**: The ‘controls’ attribute of the NMOS Device of a simple Node with a single Configuration API instance
+**Example 1**: The ‘controls’ attribute of the NMOS Device of a simple Node with a single Configuration API instance.
 
 ```json
 { 
@@ -40,15 +40,11 @@ For more details see [NMOS Device Control Types](https://specs.amwa.tv/nmos-para
 }
 ```
 
-**Example 2:** The 'controls' attribute of an NMOS Device of a Node which advertises a different Configuration API instance for each device
+**Example 2:** The 'controls' attribute of an NMOS Device of a Node which advertises a different Configuration API instance for each device.
 
 ```json
 ...
 "controls": [
-  {
-    "type": "urn:x-nmos:control:configuration/v1.0",
-    "href": "http://192.168.10.3/x-nmos/configuration/v1.0/slot2A/"
-  },
   {
     "type": "urn:x-nmos:control:configuration/v1.0",
     "href": "http://192.168.10.3/x-nmos/configuration/v1.0/slot2B/"
@@ -56,7 +52,7 @@ For more details see [NMOS Device Control Types](https://specs.amwa.tv/nmos-para
 ]
 ...
 ```
-In example 2, the path segments 'slot2A' and 'slot2B' are `<api selector>` identifiers as defined in [API Paths](APIs.md#api-paths).
+In example 2, the path segment 'slot2B' is an `<api selector>` identifier as defined in [API Paths](APIs.md#api-paths).
 
 **Note**: the API version is included in both the 'type', and in the 'href'.
 As new versions of the Configuration API are published, further control endpoints may be advertised for Devices which support multiple versions simultaneously.
