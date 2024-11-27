@@ -15,8 +15,8 @@ Examples of JSON format output are provided in the [examples](../examples/) fold
 
 JSON schemas are included with the RAML API definitions.
 These schemas validate the communication with the API.
-It is strongly recommended that implementers of a Configuration API use these JSON schemas as part of a validation stage when receiving interactions from clients.
-The schemas may reference MS-05-02 datatypes defined in the [NMOS Control Framework specification](https://specs.amwa.tv/ms-05-02/branches/v1.0.x/models/datatypes/) and in the [NMOS Feature Sets Register](https://specs.amwa.tv/nmos-control-feature-sets/branches/publish-device-configuration/device-configuration/). Note that these datatypes are not validated by the JSON schemas.
+It is RECOMMENDED that implementers of a Configuration API use these JSON schemas as part of a validation stage when receiving interactions from clients.
+Note that where schemas reference MS-05-02 datatypes defined in the [NMOS Control Framework specification](https://specs.amwa.tv/ms-05-02/branches/v1.0.x/models/datatypes/) and [NMOS Feature Sets Register](https://specs.amwa.tv/nmos-control-feature-sets/branches/publish-device-configuration/device-configuration/), these datatypes are not validated by the JSON schemas.
 
 ### Content Types
 
