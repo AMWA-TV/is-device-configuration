@@ -92,7 +92,7 @@ In order to retrieve the whole device model (full backup), requests MUST use `ro
 
 Partial backups can be created by choosing other role paths. The scope of backups can further be restricted by using a query parameter of `recurse=false` which will only include the properties of the targeted role path.
 
-`Note`: In some cases objects in a device model might have dependencies to other objects in the device model which could influence restore behaviour.
+Devices are RECOMMENDED to populate `dependencyPaths` for objects which have dependencies on other role path objects when returning a backup data set ([see NcObjectPropertiesHolder](https://specs.amwa.tv/nmos-control-feature-sets/branches/publish-device-configuration/device-configuration/#ncobjectpropertiesholder)).
 
 ## Performing a Modify restore
 
